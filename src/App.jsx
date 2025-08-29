@@ -14,12 +14,12 @@ function App() {
 
   return (
     <>
-      {/* <Navbar></Navbar> */}
+      {/* Home Page */}
       <Navbar1></Navbar1>
       <Hero></Hero>
       <CategorisSection></CategorisSection>
       <Footer></Footer>
-      {/* <Home></Home> */}
+      {/* End Home Page */}
     </>
   )
 }
