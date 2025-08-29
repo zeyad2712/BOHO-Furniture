@@ -7,6 +7,7 @@ import Navbar1 from './components/Navbar1'
 import Footer from './components/Footer'
 import Hero from './components/Hero'
 import CategorisSection from './components/CategorisSection'
+import BestSelling from './components/BestSelling'
 import Home from './pages/Home'
 
 function App() {
@@ -18,6 +19,7 @@ function App() {
       <Navbar1></Navbar1>
       <Hero></Hero>
       <CategorisSection></CategorisSection>
+      <BestSelling></BestSelling>
       <Footer></Footer>
       {/* End Home Page */}
     </>
