@@ -122,32 +122,67 @@ const Navbar = () => {
                                 </a>
                             </li>
                             {/* Dropdown */}
-                            {/* Dropdown with hover-to-show logic */}
-                            {/* Dropdown with improved hover logic: menu stays open when mouse is over button or menu */}
                             {(() => {
                                 // React state for dropdown open/close
                                 const [dropdownOpen, setDropdownOpen] = React.useState(false);
+                                const [isMobile, setIsMobile] = React.useState(window.innerWidth <= 991.98);
                                 // Track if mouse is over button or menu
                                 const buttonRef = React.useRef(null);
                                 const menuRef = React.useRef(null);
 
-                                // Close dropdown if mouse leaves both button and menu
-                                const handleMouseLeave = () => {
-                                    setTimeout(() => {
-                                        // Check if mouse is over button or menu
-                                        const isOverButton = buttonRef.current && buttonRef.current.matches(':hover');
-                                        const isOverMenu = menuRef.current && menuRef.current.matches(':hover');
-                                        if (!isOverButton && !isOverMenu) {
+                                // Handle window resize
+                                React.useEffect(() => {
+                                    const handleResize = () => {
+                                        setIsMobile(window.innerWidth <= 991.98);
+                                    };
+
+                                    window.addEventListener('resize', handleResize);
+                                    return () => window.removeEventListener('resize', handleResize);
+                                }, []);
+
+                                // Handle click outside to close dropdown on mobile
+                                React.useEffect(() => {
+                                    const handleClickOutside = (event) => {
+                                        if (isMobile && dropdownOpen &&
+                                            buttonRef.current &&
+                                            !buttonRef.current.contains(event.target) &&
+                                            menuRef.current &&
+                                            !menuRef.current.contains(event.target)) {
                                             setDropdownOpen(false);
                                         }
-                                    }, 80); // Small delay to allow moving between button and menu
+                                    };
+
+                                    document.addEventListener('mousedown', handleClickOutside);
+                                    return () => document.removeEventListener('mousedown', handleClickOutside);
+                                }, [isMobile, dropdownOpen]);
+
+                                // Close dropdown if mouse leaves both button and menu (desktop only)
+                                const handleMouseLeave = () => {
+                                    if (!isMobile) {
+                                        setTimeout(() => {
+                                            // Check if mouse is over button or menu
+                                            const isOverButton = buttonRef.current && buttonRef.current.matches(':hover');
+                                            const isOverMenu = menuRef.current && menuRef.current.matches(':hover');
+                                            if (!isOverButton && !isOverMenu) {
+                                                setDropdownOpen(false);
+                                            }
+                                        }, 80); // Small delay to allow moving between button and menu
+                                    }
+                                };
+
+                                // Toggle dropdown on click (mobile)
+                                const handleClick = (e) => {
+                                    if (isMobile) {
+                                        e.preventDefault();
+                                        setDropdownOpen(!dropdownOpen);
+                                    }
                                 };
 
                                 return (
                                     <li
-                                        className="nav-item dropdown"
+                                        className={`nav-item dropdown ${dropdownOpen ? 'show' : ''}`}
                                         style={{ margin: '0 10px', position: 'relative' }}
-                                        onMouseEnter={() => setDropdownOpen(true)}
+                                        onMouseEnter={() => !isMobile && setDropdownOpen(true)}
                                         onMouseLeave={handleMouseLeave}
                                     >
                                         <a
@@ -166,16 +201,25 @@ const Navbar = () => {
                                                 transition: "background 0.2s, color 0.2s",
                                             }}
                                             ref={buttonRef}
+                                            onClick={handleClick}
                                             onMouseOver={e => {
-                                                e.currentTarget.style.background = "#16a34a";
-                                                e.currentTarget.style.color = "#fef08a";
+                                                if (!isMobile) {
+                                                    e.currentTarget.style.background = "#16a34a";
+                                                    e.currentTarget.style.color = "#fef08a";
+                                                }
                                             }}
                                             onMouseOut={e => {
-                                                e.currentTarget.style.background = "transparent";
-                                                e.currentTarget.style.color = "#fff";
+                                                if (!isMobile) {
+                                                    e.currentTarget.style.background = "transparent";
+                                                    e.currentTarget.style.color = "#fff";
+                                                }
                                             }}
                                         >
                                             <i className="fa-solid fa-box"></i> Products
+                                            {/* {isMobile && (
+                                                <i className={`fa-solid fa-chevron-${dropdownOpen ? 'up' : 'down'}`}
+                                                    style={{ marginLeft: 8, fontSize: '0.8em', transition: 'transform 0.3s ease' }}></i>
+                                            )} */}
                                         </a>
                                         <ul
                                             className="dropdown-menu"
@@ -195,7 +239,7 @@ const Navbar = () => {
                                                 padding: "8px 5px",
                                                 display: dropdownOpen ? "block" : "none",
                                             }}
-                                            onMouseEnter={() => setDropdownOpen(true)}
+                                            onMouseEnter={() => !isMobile && setDropdownOpen(true)}
                                             onMouseLeave={handleMouseLeave}
                                         >
                                             <li>
@@ -242,14 +286,20 @@ const Navbar = () => {
                                                 <hr style={{ margin: "4px 0", borderColor: "rgba(34,197,94,0.1)" }} />
                                             </li>
                                             <li>
-                                                <a className="dropdown-item" href="#" style={{
-                                                    fontWeight: 500,
-                                                    padding: "8px 16px",
-                                                    color: "#166534",
-                                                    textDecoration: "none",
-                                                    display: "block",
-                                                    transition: "background 0.2s"
-                                                }}
+                                                <a
+                                                    className="dropdown-item"
+                                                    href="#"
+                                                    style={{
+                                                        fontWeight: 500,
+                                                        padding: "8px 16px",
+                                                        color: "#166534",
+                                                        textDecoration: "none",
+                                                        display: "block",
+                                                        transition: "background 0.2s, color 0.2s",
+                                                        "@media (max-width: 765px)": {
+                                                            color: "#fff"
+                                                        }
+                                                    }}
                                                     onMouseOver={e => {
                                                         e.currentTarget.style.background = "#f0fdf4";
                                                     }}
@@ -374,7 +424,7 @@ const Navbar = () => {
                 .dropdown-item {
                     display: block !important;
                     padding: 8px 16px !important;
-                    color: #166534 !important;
+                    color: #166534;
                     text-decoration: none !important;
                     font-weight: 500 !important;
                     transition: background 0.2s !important;
@@ -463,11 +513,15 @@ const Navbar = () => {
                         transform: scaleY(0);
                         transform-origin: top;
                         transition: transform 0.3s ease;
+                        display: none !important;
                     }
                     
                     .dropdown.show .dropdown-menu {
                         transform: scaleY(1) !important;
+                        display: block !important;
                     }
+
+                    
                     
                     /* Search form animation */
                     form {
@@ -479,6 +533,30 @@ const Navbar = () => {
                     .navbar-collapse.show form {
                         opacity: 1 !important;
                         transform: translateY(0) !important;
+                    }
+                }
+
+                @media (max-width: 765px) {
+                    .dropdown-item {
+                        color: #166534 !important;
+                        display: block !important;
+                        background: transparent !important;
+                    }
+                    
+                    .dropdown-menu {
+                        background: rgba(255, 255, 255, 0.95) !important;
+                        border: none !important;
+                        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1) !important;
+                        display: none !important;
+                    }
+                    
+                    .dropdown.show .dropdown-menu {
+                        display: block !important;
+                    }
+                    
+                    .dropdown-item:hover {
+                        background: rgba(255, 255, 255, 0.1) !important;
+                        color: #fef08a !important;
                     }
                 }
                 
@@ -515,6 +593,7 @@ const Navbar = () => {
                         min-width: 80px !important;
                         font-size: 0.95rem !important;
                     }
+                    
                 }
                 `}
                 </style>
