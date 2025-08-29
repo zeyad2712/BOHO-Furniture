@@ -4,131 +4,83 @@ import { categories, productsData } from '../data/ProductsData'
 function CategorisSection() {
     return (
         <div id='categories' className='categoris-section' style={{
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            justifyContent: 'center',
-            gap: '20px',
-            padding: '20px',
-            backgroundColor: '#fff', // Remove this after testing
+            padding: '24px 10px',
+            background: '#fff',
+            textAlign: 'center'
         }}>
-            {/* Heading */}
-            <h1 style={{
-                fontSize: '3rem',
-                fontWeight: 'bold',
-                color: 'rgb(139, 69, 19)',
-                marginBottom: '20px',
-            }}>Shop by Category</h1>
-            {/* Categories Grid */}
-            <div className="categories-grid" style={{
-                display: 'flex',
-                flexDirection: 'row',
-                alignItems: 'center',
-                justifyContent: 'center',
-                gap: '20px',
-                paddingInline: '20px',
+            <h2 style={{
+                fontSize: '2rem',
+                fontWeight: 600,
+                color: '#8b4513',
+                marginBottom: '18px'
             }}>
-
+                Shop by Category
+            </h2>
+            <div className="categories-grid" style={{
+                display: 'grid',
+                gridTemplateColumns: 'repeat(6, 1fr)',
+                gap: '16px',
+                padding: '20px'
+            }}>
                 {categories
                     .filter(category => category !== 'All')
                     .map((category) => (
                         <button
                             key={category}
-                            className="category-card"
                             style={{
                                 display: 'flex',
                                 flexDirection: 'column',
                                 alignItems: 'center',
                                 justifyContent: 'center',
-                                gap: '16px',
-                                background: 'linear-gradient(120deg, #e9edc9 0%, #fefae0 100%)',
-                                border: 'none',
-                                borderRadius: '24px',
-                                boxShadow: '0 6px 24px rgba(34,197,94,0.10), 0 1.5px 6px rgba(139,69,19,0.08)',
-                                padding: '36px 32px',
-                                minWidth: '150px',
-                                minHeight: '150px',
+                                background: '#f5f5f5',
+                                border: '1px solid #e0e0e0',
+                                borderRadius: '12px',
+                                padding: '18px 16px',
+                                minWidth: '90px',
+                                minHeight: '90px',
                                 cursor: 'pointer',
-                                transition: 'transform 0.22s cubic-bezier(.4,0,.2,1), box-shadow 0.22s, background 0.22s',
                                 fontFamily: 'inherit',
-                                outline: 'none',
-                                position: 'relative',
-                                overflow: 'hidden',
-                                borderBottom: '4px solid #22c55e',
-                            }}
-                            onMouseOver={e => {
-                                e.currentTarget.style.transform = 'translateY(-10px) scale(1.06)';
-                                e.currentTarget.style.boxShadow = '0 12px 36px rgba(34,197,94,0.18), 0 2px 8px rgba(139,69,19,0.12)';
-                                e.currentTarget.style.background = 'linear-gradient(120deg, #fefae0 0%, #d4e7c5 100%)';
-                                e.currentTarget.style.borderBottom = '4px solid #8b4513';
-                            }}
-                            onMouseOut={e => {
-                                e.currentTarget.style.transform = '';
-                                e.currentTarget.style.boxShadow = '0 6px 24px rgba(34,197,94,0.10), 0 1.5px 6px rgba(139,69,19,0.08)';
-                                e.currentTarget.style.background = 'linear-gradient(120deg, #e9edc9 0%, #fefae0 100%)';
-                                e.currentTarget.style.borderBottom = '4px solid #22c55e';
+                                fontSize: '1rem',
+                                color: '#333',
+                                transition: 'background 0.15s, border 0.15s'
                             }}
                         >
-                            <div
-                                style={{
-                                    width: 64,
-                                    height: 64,
-                                    borderRadius: '50%',
-                                    background: 'radial-gradient(circle, #22c55e33 60%, #fefae0 100%)',
-                                    display: 'flex',
-                                    alignItems: 'center',
-                                    justifyContent: 'center',
-                                    fontSize: '2.3rem',
-                                    marginBottom: 6,
-                                    border: '3px solid #22c55e',
-                                    boxShadow: '0 2px 8px rgba(34,197,94,0.10)',
-                                    transition: 'border-color 0.18s',
-                                }}
-                            >
-                                <span style={{ fontSize: '2.3rem', marginBottom: 2 }}>
-                                    {{
-                                        "Furniture": "🪑",
-                                        "Decor": "🖼️",
-                                        "Lighting": "💡",
-                                        "Kitchen": "🍽️",
-                                        "Bedding": "🛏️",
-                                        "Bath": "🛁",
-                                        "Outdoor": "🌳",
-                                        "Rugs": "🧶",
-                                        "Storage": "📦",
-                                        "Kids": "🧸",
-                                        "Office": "🖥️",
-                                        "Plants": "🪴",
-                                        "Art": "🎨",
-                                        "Textiles": "🧵",
-                                        "Tableware": "🍴",
-                                        "Candles": "🕯️",
-                                        "Mirrors": "🪞",
-                                        "Pet": "🐾",
-                                        "Holiday": "🎄",
-                                        "Vintage": "📻",
-                                    }[category] || "🛒"}
-                                </span>
-                            </div>
-                            <h3
-                                style={{
-                                    fontSize: '1.18rem',
-                                    fontWeight: 700,
-                                    color: '#1e3932',
-                                    margin: 0,
-                                    letterSpacing: '0.02em',
-                                    textShadow: '0 1px 0 #e9edc9',
-                                    textAlign: 'center',
-                                }}
-                            >
+                            <span style={{ fontSize: '2rem', marginBottom: 6 }}>
+                                {{
+                                    "Furniture": "🪑",
+                                    "Decor": "🖼️",
+                                    "Lighting": "💡",
+                                    "Kitchen": "🍽️",
+                                    "Bedding": "🛏️",
+                                    "Bath": "🛁",
+                                    "Outdoor": "🌳",
+                                    "Rugs": "🧶",
+                                    "Storage": "📦",
+                                    "Kids": "🧸",
+                                    "Office": "🖥️",
+                                    "Plants": "🪴",
+                                    "Art": "🎨",
+                                    "Textiles": "🧵",
+                                    "Tableware": "🍴",
+                                    "Candles": "🕯️",
+                                    "Mirrors": "🪞",
+                                    "Pet": "🐾",
+                                    "Holiday": "🎄",
+                                    "Vintage": "📻",
+                                }[category] || "🛒"}
+                            </span>
+                            <span style={{
+                                fontSize: '1rem',
+                                fontWeight: 500,
+                                color: '#444',
+                                marginTop: 2
+                            }}>
                                 {category}
-                            </h3>
+                            </span>
                         </button>
                     ))
                 }
-
             </div>
-
         </div>
     )
 }

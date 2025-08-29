@@ -532,7 +532,6 @@ function Hero() {
                 </div>
             </div>
 
-            {/* Scroll Down Button */}
             <div className="scroll-down" style={{
                 position: 'absolute',
                 bottom: '20px',
