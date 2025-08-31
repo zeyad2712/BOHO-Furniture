@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Link, useLocation } from "react-router-dom";
 // import ProductsData from '../data/ProductsData.js';
 
 const Navbar = () => {
@@ -34,9 +35,9 @@ const Navbar = () => {
             >
                 <div className="container-fluid" style={{ alignItems: "center" }}>
                     {/* Brand */}
-                    <a
+                    <Link
                         className="navbar-brand d-flex align-items-center"
-                        href="#"
+                        to="/"
                         style={{
                             fontWeight: 800,
                             fontSize: "1.75rem",
@@ -44,6 +45,7 @@ const Navbar = () => {
                             letterSpacing: "-0.5px",
                             fontFamily: `'Inter', 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, 'sans-serif'`,
                             textShadow: "0 2px 8px rgba(34,197,94,0.10)",
+                            textDecoration: "none",
                         }}
                     >
                         <span
@@ -65,7 +67,7 @@ const Navbar = () => {
                             </svg>
                         </span>
                         BOHO <span style={{ color: "#fef08a", marginLeft: 4 }}>FURNITURE</span>
-                    </a>
+                    </Link>
 
                     {/* Mobile Toggle Button */}
                     <button
@@ -97,8 +99,9 @@ const Navbar = () => {
                         {/* Navigation Links */}
                         <ul className="navbar-nav me-auto mb-2 mb-lg-0" style={{ display: 'flex', flexDirection: 'row', listStyle: 'none', margin: 0, padding: 0 }}>
                             <li className="nav-item" style={{ margin: '0 10px' }}>
-                                <a
+                                <Link
                                     className="nav-link active"
+                                    to="/"
                                     href="#"
                                     style={{
                                         color: "#fff",
@@ -119,7 +122,7 @@ const Navbar = () => {
                                     }}
                                 >
                                     <i className="fa-solid fa-house"></i> Home
-                                </a>
+                                </Link>
                             </li>
                             {/* Dropdown */}
                             {(() => {
@@ -243,7 +246,7 @@ const Navbar = () => {
                                             onMouseLeave={handleMouseLeave}
                                         >
                                             <li>
-                                                <a className="dropdown-item" href="#" style={{
+                                                <Link className="dropdown-item" to="/products" style={{
                                                     fontWeight: 500,
                                                     padding: "8px 16px",
                                                     color: "#166534",
@@ -260,10 +263,10 @@ const Navbar = () => {
                                                 >
                                                     <i className="fa-solid fa-layer-group" style={{ marginRight: 8 }}></i>
                                                     All Products
-                                                </a>
+                                                </Link>
                                             </li>
                                             <li>
-                                                <a className="dropdown-item" href="#" style={{
+                                                <a className="dropdown-item" href="#new-arrivals" style={{
                                                     fontWeight: 500,
                                                     padding: "8px 16px",
                                                     color: "#166534",
@@ -277,6 +280,13 @@ const Navbar = () => {
                                                     onMouseOut={e => {
                                                         e.currentTarget.style.background = "transparent";
                                                     }}
+                                                    onClick={e => {
+                                                        e.preventDefault();
+                                                        const section = document.getElementById('new-arrivals');
+                                                        if (section) {
+                                                            section.scrollIntoView({ behavior: 'smooth' });
+                                                        }
+                                                    }}
                                                 >
                                                     <i className="fa-solid fa-star" style={{ marginRight: 8 }}></i>
                                                     New Arrivals
@@ -288,7 +298,7 @@ const Navbar = () => {
                                             <li>
                                                 <a
                                                     className="dropdown-item"
-                                                    href="#"
+                                                    href="#best-selling"
                                                     style={{
                                                         fontWeight: 500,
                                                         padding: "8px 16px",
@@ -305,6 +315,13 @@ const Navbar = () => {
                                                     }}
                                                     onMouseOut={e => {
                                                         e.currentTarget.style.background = "transparent";
+                                                    }}
+                                                    onClick={e => {
+                                                        e.preventDefault();
+                                                        const section = document.getElementById('best-selling');
+                                                        if (section) {
+                                                            section.scrollIntoView({ behavior: 'smooth' });
+                                                        }
                                                     }}
                                                 >
                                                     <i className="fa-solid fa-fire" style={{ marginRight: 8 }}></i>
@@ -336,6 +353,13 @@ const Navbar = () => {
                                         e.currentTarget.style.background = "transparent";
                                         e.currentTarget.style.color = "#fff";
                                     }}
+                                    onClick={e => {
+                                        e.preventDefault();
+                                        const section = document.getElementById('categories');
+                                        if (section) {
+                                            section.scrollIntoView({ behavior: 'smooth' });
+                                        }
+                                    }}
                                 >
                                     <i className="fa-solid fa-list"></i> Categories
                                 </a>
@@ -344,7 +368,7 @@ const Navbar = () => {
                             <li className="nav-item" style={{ margin: '0 10px' }}>
                                 <a
                                     className="nav-link"
-                                    href="#"
+                                    href="#contact"
                                     style={{
                                         color: "#fff",
                                         fontWeight: 500,
@@ -361,6 +385,13 @@ const Navbar = () => {
                                     onMouseOut={e => {
                                         e.currentTarget.style.background = "transparent";
                                         e.currentTarget.style.color = "#fff";
+                                    }}
+                                    onClick={e => {
+                                        e.preventDefault();
+                                        const section = document.getElementById('contact');
+                                        if (section) {
+                                            section.scrollIntoView({ behavior: 'smooth' });
+                                        }
                                     }}
                                 >
                                     <i className="fa-solid fa-user"></i> Contact

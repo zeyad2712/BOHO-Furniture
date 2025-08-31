@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
-
+import { Link } from 'react-router-dom';
+import ScrollToTop from './ScrollToTop';
 // Counter animation hook
 function useCounter(to, duration = 4000) { // Slowed down: duration doubled from 6000ms to 12000ms
     const [count, setCount] = useState(0);
@@ -336,8 +337,8 @@ function Hero() {
                             animation: 'fadeInUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) 1.2s forwards',
                         }}
                     >
-                        <a
-                            href="#"
+                        <Link
+                            to="/products"
                             className="btn-primary"
                             style={{
                                 background: 'linear-gradient(135deg, #22c55e 0%, #16a34a 100%)',
@@ -369,8 +370,8 @@ function Hero() {
                             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                                 <path d="M5 12h14M12 5l7 7-7 7" />
                             </svg>
-                        </a>
-                        <a
+                        </Link>
+                        {/* <a
                             href="#"
                             className="btn-outline"
                             style={{
@@ -402,7 +403,7 @@ function Hero() {
                             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                                 <path d="M14.828 14.828a4 4 0 01-5.656 0M9 10h1m4 0h1m-6 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                             </svg>
-                        </a>
+                        </a> */}
                     </div>
                 </div>
 
@@ -532,7 +533,7 @@ function Hero() {
                 </div>
             </div>
 
-            <div className="scroll-down" style={{
+            <div className="scroll-down" id='scroll-down' style={{
                 position: 'absolute',
                 bottom: '20px',
                 right: '40px',
@@ -543,11 +544,20 @@ function Hero() {
                 boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)',
                 transition: 'all 0.3s ease',
                 cursor: 'pointer',
-            }}>
-                <a href="#">
+            }}
+                onScroll={() => {
+                    document.getElementById('categories').scrollIntoView({ behavior: 'smooth' });
+                }}
+            >
+                <a href="#categories">
                     <i className="fa-solid fa-arrow-down" style={{ fontSize: '1.7rem', color: '#fff' }}></i>
                 </a>
             </div>
+
+
+
+            {/* Scroll To Top Button */}
+            <ScrollToTop />
 
             {/* Animations */}
             <style>
@@ -643,7 +653,7 @@ function Hero() {
           }
         `}
             </style>
-        </section>
+        </section >
     );
 }
 

@@ -51,6 +51,7 @@ const product = {
 
 - React 19
 - Vite
+- React Router DOM
 - Tailwind CSS (via CDN)
 - React Icons
 - Bootstrap (via CDN)
@@ -65,7 +66,26 @@ src/
 │   ├── Navbar.jsx
 │   ├── Hero.jsx
 │   └── ...
+├── pages/
+│   ├── Home.jsx             # Home page component
+│   └── Products.jsx         # Products page component
 ├── data/
 │   └── ProductsData.js      # Product data and utilities
 └── ...
 ```
+
+## Routing
+
+The application uses React Router DOM for navigation:
+
+- `/` - Home page with hero, categories, and best selling products
+- `/home` - Same as home page
+- `/products` - All products page displaying the complete product catalog
+
+### Navigation Features
+
+- **Brand Logo**: Links to home page
+- **Home Link**: Navigation to home page
+- **Products Dropdown**: Contains links to different product categories
+- **Categories Link**: Scrolls to categories section
+- **Contact Link**: Placeholder for contact page
