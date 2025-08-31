@@ -1,15 +1,45 @@
-import React from 'react'
+import React, { useRef, useEffect, useState } from 'react'
+
+// Animation hook (copied from NewArrivals.jsx)
+function useInView(ref, options = {}) {
+    const [inView, setInView] = useState(false);
+
+    useEffect(() => {
+        if (!ref.current) return;
+        const observer = new window.IntersectionObserver(
+            ([entry]) => {
+                if (entry.isIntersecting) {
+                    setInView(true);
+                    observer.disconnect();
+                }
+            },
+            { threshold: 0.2, ...options }
+        );
+        observer.observe(ref.current);
+        return () => observer.disconnect();
+    }, [ref, options]);
+
+    return inView;
+}
 
 function Reviews() {
+    const sectionRef = useRef(null);
+    const inView = useInView(sectionRef);
+
     return (
         <>
             <div id='reviews' className='py-6'></div>
             <section
                 className="reviews-section"
+                ref={sectionRef}
                 style={{
                     padding: "0",
                     position: "relative",
-                    overflow: "hidden"
+                    overflow: "hidden",
+                    minHeight: 100,
+                    transition: 'opacity 0.8s cubic-bezier(0.4,0,0.2,1), transform 0.8s cubic-bezier(0.4,0,0.2,1)',
+                    opacity: inView ? 1 : 0,
+                    transform: inView ? 'translateY(0px)' : 'translateY(60px)',
                 }}
             >
                 <div className="container mx-auto px-4" style={{ maxWidth: 1100 }}>
@@ -22,8 +52,9 @@ function Reviews() {
                             marginBottom: 24,
                             fontWeight: 700,
                             letterSpacing: "0.01em",
-                            opacity: 0,
-                            animation: "fadeInUpAbout 0.7s 0.1s forwards"
+                            transition: 'opacity 0.7s 0.2s, transform 0.7s 0.2s',
+                            opacity: inView ? 1 : 0,
+                            transform: inView ? 'translateY(0px)' : 'translateY(20px)',
                         }}
                     >
                         What Our Customers Say
@@ -37,8 +68,9 @@ function Reviews() {
                             justifyContent: "center",
                             alignItems: "stretch",
                             marginTop: 10,
-                            opacity: 0,
-                            animation: "fadeInZoomAbout 0.7s 0.25s cubic-bezier(0.4,0,0.2,1) forwards"
+                            transition: 'opacity 0.8s 0.25s, transform 0.8s 0.25s',
+                            opacity: inView ? 1 : 0,
+                            transform: inView ? 'translateY(0px)' : 'translateY(40px)',
                         }}
                     >
                         {/* Slider for Reviews */}
@@ -117,8 +149,7 @@ function Reviews() {
                                         }}
                                     >
                                         {(() => {
-                                            // Responsive: 1 card on mobile, 4 on desktop
-                                            // We'll use a media query to determine the number of cards to show
+                                            // Responsive: 1 card on mobile, 5 on desktop
                                             const [cardsToShow, setCardsToShow] = React.useState(1);
 
                                             // Auto-move logic
@@ -162,7 +193,9 @@ function Reviews() {
                                                             display: "flex",
                                                             flexDirection: "column",
                                                             alignItems: "center",
-                                                            transition: "box-shadow 0.2s"
+                                                            transition: "box-shadow 0.2s, opacity 0.7s, transform 0.7s",
+                                                            opacity: inView ? 1 : 0,
+                                                            transform: inView ? 'translateY(0px)' : 'translateY(40px)',
                                                         }}
                                                     >
                                                         <div style={{ display: "flex", gap: 2, marginBottom: 10 }}>
@@ -266,18 +299,6 @@ function Reviews() {
                         })()}
                     </div>
                 </div>
-                <style>
-                    {`
-                        @keyframes fadeInUpAbout {
-                            0% { opacity: 0; transform: translateY(30px);}
-                            100% { opacity: 1; transform: translateY(0);}
-                        }
-                        @keyframes fadeInZoomAbout {
-                            0% { opacity: 0; transform: scale(0.96) translateY(30px);}
-                            100% { opacity: 1; transform: scale(1) translateY(0);}
-                        }
-                    `}
-                </style>
             </section>
         </>
     )

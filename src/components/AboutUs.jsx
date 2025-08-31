@@ -1,15 +1,47 @@
-import React from 'react'
+import React, { useRef, useEffect, useState } from 'react'
+
+/**
+ * Animation hook: returns true when the ref is in view (like in NewArrivals.jsx)
+ */
+function useInView(ref, options = {}) {
+    const [inView, setInView] = useState(false);
+
+    useEffect(() => {
+        if (!ref.current) return;
+        const observer = new window.IntersectionObserver(
+            ([entry]) => {
+                if (entry.isIntersecting) {
+                    setInView(true);
+                    observer.disconnect();
+                }
+            },
+            { threshold: 0.2, ...options }
+        );
+        observer.observe(ref.current);
+        return () => observer.disconnect();
+    }, [ref, options]);
+
+    return inView;
+}
 
 function AboutUs() {
+    const sectionRef = useRef(null);
+    const inView = useInView(sectionRef);
+
     return (
         <>
             <div id='about' className='py-6'></div>
             <section
                 className="about-us-section"
+                ref={sectionRef}
                 style={{
                     padding: '20px 0 36px 0',
                     position: 'relative',
-                    overflow: 'hidden'
+                    overflow: 'hidden',
+                    minHeight: 100,
+                    transition: 'opacity 0.8s cubic-bezier(0.4,0,0.2,1), transform 0.8s cubic-bezier(0.4,0,0.2,1)',
+                    opacity: inView ? 1 : 0,
+                    transform: inView ? 'translateY(0px)' : 'translateY(60px)',
                 }}
             >
                 <div className="container mx-auto px-4" style={{ maxWidth: 1100 }}>
@@ -21,8 +53,9 @@ function AboutUs() {
                             marginBottom: 18,
                             textAlign: 'center',
                             paddingBottom: '20px',
-                            opacity: 0,
-                            animation: 'fadeInUpAbout 0.7s 0.1s forwards'
+                            transition: 'opacity 0.7s 0.2s, transform 0.7s 0.2s',
+                            opacity: inView ? 1 : 0,
+                            transform: inView ? 'translateY(0px)' : 'translateY(20px)',
                         }}
                     >
                         About BOHO
@@ -35,7 +68,10 @@ function AboutUs() {
                             alignItems: 'center',
                             gap: 40,
                             flexWrap: 'wrap',
-                            justifyContent: 'center'
+                            justifyContent: 'center',
+                            transition: 'opacity 0.7s 0.1s, transform 0.7s 0.1s',
+                            opacity: inView ? 1 : 0,
+                            transform: inView ? 'translateY(0px)' : 'translateY(30px)',
                         }}
                     >
                         <div
@@ -45,8 +81,9 @@ function AboutUs() {
                                 minWidth: 260,
                                 maxWidth: 500,
                                 textAlign: 'center',
-                                opacity: 0,
-                                animation: 'fadeInZoomAbout 0.7s 0.25s cubic-bezier(0.4,0,0.2,1) forwards'
+                                transition: 'opacity 0.7s 0.25s, transform 0.7s 0.25s',
+                                opacity: inView ? 1 : 0,
+                                transform: inView ? 'translateY(0px)' : 'translateY(40px)',
                             }}
                         >
                             {/* The Store Image */}
@@ -73,8 +110,9 @@ function AboutUs() {
                                 borderRadius: 18,
                                 padding: '28px 24px',
                                 boxShadow: '0 2px 12px rgba(139,69,19,0.07)',
-                                opacity: 0,
-                                animation: 'fadeInUpAbout 0.7s 0.35s forwards'
+                                transition: 'opacity 0.7s 0.35s, transform 0.7s 0.35s',
+                                opacity: inView ? 1 : 0,
+                                transform: inView ? 'translateY(0px)' : 'translateY(40px)',
                             }}
                         >
                             <p style={{
@@ -122,22 +160,26 @@ function AboutUs() {
                             </p> */}
 
                             {/* Learn More Button */}
-                            <a href="/about" className="btn mt-3 float-right" style={{ background: '#16a34a', border: 'none', borderRadius: '10px', fontSize: '17px', fontWeight: '700', color: '#fff', padding: '10px 15px', textDecoration: 'none', }}>Learn More</a>
+                            <a
+                                href="/about"
+                                className="btn mt-3 float-right"
+                                style={{
+                                    background: '#16a34a',
+                                    border: 'none',
+                                    borderRadius: '10px',
+                                    fontSize: '17px',
+                                    fontWeight: '700',
+                                    color: '#fff',
+                                    padding: '10px 15px',
+                                    textDecoration: 'none',
+                                    transition: 'opacity 0.7s 0.4s, transform 0.7s 0.4s',
+                                    opacity: inView ? 1 : 0,
+                                    transform: inView ? 'translateY(0px)' : 'translateY(20px)',
+                                }}
+                            >Learn More</a>
                         </div>
                     </div>
                 </div>
-                <style>
-                    {`
-            @keyframes fadeInUpAbout {
-                0% { opacity: 0; transform: translateY(30px);}
-                100% { opacity: 1; transform: translateY(0);}
-            }
-            @keyframes fadeInZoomAbout {
-                0% { opacity: 0; transform: scale(0.96) translateY(30px);}
-                100% { opacity: 1; transform: scale(1) translateY(0);}
-            }
-            `}
-                </style>
             </section>
         </>
     )
