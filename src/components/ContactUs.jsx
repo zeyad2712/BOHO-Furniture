@@ -1,16 +1,46 @@
-import React, { useRef, useState } from 'react';
-// import ContactForm from '../components/ContactForm'
+import React, { useRef, useEffect, useState } from 'react';
+
+// Animation hook: returns true when the ref is in view (like in NewArrivals.jsx)
+function useInView(ref, options = {}) {
+    const [inView, setInView] = useState(false);
+
+    useEffect(() => {
+        if (!ref.current) return;
+        const observer = new window.IntersectionObserver(
+            ([entry]) => {
+                if (entry.isIntersecting) {
+                    setInView(true);
+                    observer.disconnect();
+                }
+            },
+            { threshold: 0.2, ...options }
+        );
+        observer.observe(ref.current);
+        return () => observer.disconnect();
+    }, [ref, options]);
+
+    return inView;
+}
+
 function ContactUs() {
+    const sectionRef = useRef(null);
+    const inView = useInView(sectionRef);
+
     return (
         <>
             <div id="contact" className='py-8'></div>
 
             <section
                 className="contact-us-section"
+                ref={sectionRef}
                 style={{
                     padding: '0 0 48px 0',
                     position: 'relative',
-                    overflow: 'hidden'
+                    overflow: 'hidden',
+                    minHeight: 100,
+                    transition: 'opacity 0.8s cubic-bezier(0.4,0,0.2,1), transform 0.8s cubic-bezier(0.4,0,0.2,1)',
+                    opacity: inView ? 1 : 0,
+                    transform: inView ? 'translateY(0px)' : 'translateY(60px)',
                 }}
             >
                 <div className="container mx-auto" style={{ width: '100%' }}>
@@ -22,8 +52,9 @@ function ContactUs() {
                             marginBottom: 18,
                             textAlign: 'center',
                             paddingBottom: '12px',
-                            opacity: 0,
-                            animation: 'fadeInUpContact 0.7s 0.1s forwards'
+                            opacity: inView ? 1 : 0,
+                            transform: inView ? 'translateY(0px)' : 'translateY(30px)',
+                            transition: 'opacity 0.7s 0.1s cubic-bezier(0.4,0,0.2,1), transform 0.7s 0.1s cubic-bezier(0.4,0,0.2,1)'
                         }}
                     >
                         Contact Us
@@ -34,8 +65,9 @@ function ContactUs() {
                             color: '#374151',
                             fontSize: '1.13rem',
                             marginBottom: 32,
-                            opacity: 0,
-                            animation: 'fadeInUpContact 0.7s 0.18s forwards'
+                            opacity: inView ? 1 : 0,
+                            transform: inView ? 'translateY(0px)' : 'translateY(30px)',
+                            transition: 'opacity 0.7s 0.18s cubic-bezier(0.4,0,0.2,1), transform 0.7s 0.18s cubic-bezier(0.4,0,0.2,1)'
                         }}
                     >
                         We'd love to hear from you! Whether you have a question about <br /> our products, need assistance, or just want to share your thoughts, our team is ready to help.
@@ -62,8 +94,9 @@ function ContactUs() {
                                 boxShadow: '0 2px 12px rgba(34,197,94,0.07)',
                                 padding: '28px 22px',
                                 marginBottom: 18,
-                                opacity: 0,
-                                animation: 'fadeInZoomContact 0.7s 0.22s cubic-bezier(0.4,0,0.2,1) forwards'
+                                opacity: inView ? 1 : 0,
+                                transform: inView ? 'scale(1) translateY(0px)' : 'scale(0.96) translateY(30px)',
+                                transition: 'opacity 0.7s 0.22s cubic-bezier(0.4,0,0.2,1), transform 0.7s 0.22s cubic-bezier(0.4,0,0.2,1)'
                             }}
                         >
                             <h3 style={{ color: '#16a34a', fontWeight: 600, fontSize: 21, marginBottom: 18 }}>
@@ -114,8 +147,9 @@ function ContactUs() {
                                 display: 'flex',
                                 flexDirection: 'column',
                                 gap: 18,
-                                opacity: 0,
-                                animation: 'fadeInUpContact 0.7s 0.32s forwards'
+                                opacity: inView ? 1 : 0,
+                                transform: inView ? 'translateY(0px)' : 'translateY(30px)',
+                                transition: 'opacity 0.7s 0.32s cubic-bezier(0.4,0,0.2,1), transform 0.7s 0.32s cubic-bezier(0.4,0,0.2,1)'
                             }}
                             onSubmit={e => {
                                 e.preventDefault();
@@ -205,19 +239,7 @@ function ContactUs() {
                         </form>
                     </div>
                 </div>
-                <style>
-                    {`
-            @keyframes fadeInUpContact {
-                0% { opacity: 0; transform: translateY(30px);}
-                100% { opacity: 1; transform: translateY(0);}
-            }
-            @keyframes fadeInZoomContact {
-                0% { opacity: 0; transform: scale(0.96) translateY(30px);}
-                100% { opacity: 1; transform: scale(1) translateY(0);}
-            }
-            `}
-                </style>
-
+                {/* No <style> block needed, animation is now handled by JS/React */}
                 {/* <ContactForm /> */}
             </section>
         </>
