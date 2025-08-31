@@ -1,8 +1,9 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 function Footer() {
     return (
-        <footer style={{ background: '#23272f', color: '#fff', padding: '40px 0 0 0', fontFamily: 'inherit' }}>
+        <footer style={{ background: '#16a34a', color: '#fff', padding: '40px 0 0 0', fontFamily: 'inherit' }}>
             <div
                 style={{
                     display: 'flex',
@@ -37,7 +38,7 @@ function Footer() {
                     </h4>
                     <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginLeft: 2 }}>
                         <a
-                            href="https://facebook.com/"
+                            href="https://www.facebook.com/profile.php?id=61575954315572"
                             target="_blank"
                             rel="noopener noreferrer"
                             style={{ color: '#fff', fontSize: 25, transition: 'all 0.3s', textDecoration: 'none' }}
@@ -57,7 +58,7 @@ function Footer() {
                             <i className="fab fa-x-twitter" aria-label="x"></i>
                         </a>
                         <a
-                            href="https://instagram.com/"
+                            href="https://www.instagram.com/boho_home_furniture/?fbclid=IwY2xjawMg_FpleHRuA2FlbQIxMABicmlkETFxZmR2Zmd1cG44Rnh2T1FZAR7Z-b0c0JKQi5lsbTEbXqYaB5fqivWAqI3-zV2fGkGSuvqMDJ62KJuyPRA87g_aem_Pao_F9wniMS1GrhBcRPUUA#"
                             target="_blank"
                             rel="noopener noreferrer"
                             style={{ color: '#fff', fontSize: 25, transition: 'all 0.3s', textDecoration: 'none' }}
@@ -81,7 +82,7 @@ function Footer() {
 
                 {/* Column 2: Terms */}
                 <div style={{ flex: 1, minWidth: 180, marginBottom: 24 }}>
-                    <h3 style={{ fontSize: 23, marginBottom: 12 }}>Terms & Policies</h3>
+                    <h3 style={{ fontSize: 23, marginBottom: 12, fontWeight: 600 }}>Terms & Policies</h3>
                     <nav>
                         <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
                             {[
@@ -91,8 +92,8 @@ function Footer() {
                                 { name: 'Shipping Policy', link: '/shipping' }
                             ].map((item, i) => (
                                 <li key={i}>
-                                    <a
-                                        href={item.link}
+                                    <Link
+                                        to={item.link}
                                         style={{
                                             color: '#fff',
                                             textDecoration: 'none',
@@ -105,7 +106,7 @@ function Footer() {
                                         onMouseOut={e => e.currentTarget.style.scale = '1'}
                                     >
                                         {item.name}
-                                    </a>
+                                    </Link>
                                 </li>
                             ))}
                         </ul>
@@ -114,18 +115,18 @@ function Footer() {
 
                 {/* Column 3: Navigation */}
                 <div style={{ flex: 1, minWidth: 180, marginBottom: 24 }}>
-                    <h3 style={{ fontSize: 23, marginBottom: 12 }}>Quick Links</h3>
+                    <h3 style={{ fontSize: 23, marginBottom: 12, fontWeight: 600 }}>Quick Links</h3>
                     <nav>
                         <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
                             {[
                                 { name: 'Home', link: '/' },
                                 { name: 'Shop', link: '/products' },
-                                { name: 'Categories', link: '/categories' },
-                                { name: 'Contact', link: '/contact' }
+                                { name: 'Categories', link: '#categories' },
+                                { name: 'Contact', link: '#contact' }
                             ].map((item, i) => (
                                 <li key={i}>
-                                    <a
-                                        href={item.link}
+                                    <Link
+                                        to={item.link}
                                         style={{
                                             color: '#fff',
                                             textDecoration: 'none',
@@ -138,7 +139,7 @@ function Footer() {
                                         onMouseOut={e => e.currentTarget.style.scale = '1'}
                                     >
                                         {item.name}
-                                    </a>
+                                    </Link>
                                 </li>
                             ))}
                         </ul>
@@ -146,26 +147,26 @@ function Footer() {
                 </div>
 
                 {/* Column 4: Contact Info */}
-                <div style={{ flex: 1, minWidth: 250, marginBottom: 24 }}>
+                <div style={{ flex: 1, minWidth: 250, marginBottom: 24, fontWeight: 600 }}>
                     <h3 style={{ fontWeight: 600, fontSize: 23, marginBottom: 14 }}>Contact Information</h3>
                     <div style={{ marginBottom: 10, display: 'flex', alignItems: 'center', gap: 8 }}>
                         <i className="fa-solid fa-phone" style={{ fontSize: 16, color: '#fff' }}></i>
-                        <a href="tel:+1234567890" style={{ color: '#fff', textDecoration: 'underline', fontWeight: 400 }}>+1 (234) 567-890</a>
+                        <a href="tel:+20 10 80434434" style={{ color: '#fff', textDecoration: 'underline', fontWeight: 400 }}>+20 10 80434434</a>
                     </div>
                     <div style={{ marginBottom: 10, display: 'flex', alignItems: 'center', gap: 8 }}>
                         <i className="fa-solid fa-envelope" style={{ fontSize: 16, color: '#fff' }}></i>
-                        <a href="mailto:info@boho.com" style={{ color: '#fff', textDecoration: 'underline', fontWeight: 400 }}>info@boho.com</a>
+                        <a href="mailto:info@bohofurnuture.com" style={{ color: '#fff', textDecoration: 'underline', fontWeight: 400 }}>info@bohofurnuture.com</a>
                     </div>
                     <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
                         <i className="fa-solid fa-location-dot" style={{ fontSize: 16, color: '#fff' }}></i>
-                        <span>123 Boho Street, Downtown, Cityville, Country</span>
+                        <span>Armed Forces Buildings, Tower 6, Dajla, Maadi, Cairo, Egypt</span>
                     </div>
                 </div>
             </div>
 
             {/* Bottom Footer */}
             <div style={{
-                borderTop: '1px solid #363a45',
+                borderTop: '1px solid #fff',
                 marginTop: 32,
                 padding: '18px 0 8px 0',
                 textAlign: 'center',
