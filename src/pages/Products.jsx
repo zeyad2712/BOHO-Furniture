@@ -92,7 +92,7 @@ const Products = () => {
     .product-fadein {
         opacity: 0;
         transform: translateY(30px) scale(0.98);
-        animation: fadeInUp 0.6s cubic-bezier(.23,1.01,.32,1) forwards;
+        animation: fadeInUp 1s cubic-bezier(.23,1.01,.32,1) forwards;
     }
     @keyframes fadeInUp {
         to {
@@ -124,7 +124,8 @@ const Products = () => {
             </div>
 
             {/* Filter Bar */}
-            <div className="bg-transparent rounded-lg p-6 mb-8 transition-all duration-500 ease-in-out">
+            <div className="bg-transparent rounded-lg p-6 mb-4 transition-all duration-500 ease-in-out"
+            >
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
                     {/* Search */}
                     <div>
