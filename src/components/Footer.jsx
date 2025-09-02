@@ -33,7 +33,7 @@ function Footer() {
                         </div>
                         <span style={{ fontWeight: 700, fontSize: 22, color: '#fff', letterSpacing: 2, marginRight: 18 }}>BOHO</span>
                     </div>
-                    <h4 className='text-center'>
+                    <h4 className='text-center font-bold mb-2'>
                         Follow Us!
                     </h4>
                     <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginLeft: 2 }}>
@@ -48,16 +48,6 @@ function Footer() {
                             <i className="fab fa-facebook-f" aria-label="facebook"></i>
                         </a>
                         <a
-                            href="https://x.com/"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            style={{ color: '#fff', fontSize: 25, transition: 'all 0.3s', textDecoration: 'none' }}
-                            onMouseOver={e => e.currentTarget.style.scale = '1.1'}
-                            onMouseOut={e => e.currentTarget.style.scale = '1'}
-                        >
-                            <i className="fab fa-x-twitter" aria-label="x"></i>
-                        </a>
-                        <a
                             href="https://www.instagram.com/boho_home_furniture/?fbclid=IwY2xjawMg_FpleHRuA2FlbQIxMABicmlkETFxZmR2Zmd1cG44Rnh2T1FZAR7Z-b0c0JKQi5lsbTEbXqYaB5fqivWAqI3-zV2fGkGSuvqMDJ62KJuyPRA87g_aem_Pao_F9wniMS1GrhBcRPUUA#"
                             target="_blank"
                             rel="noopener noreferrer"
@@ -66,16 +56,6 @@ function Footer() {
                             onMouseOut={e => e.currentTarget.style.scale = '1'}
                         >
                             <i className="fab fa-instagram" aria-label="instagram"></i>
-                        </a>
-                        <a
-                            href="https://linkedin.com/"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            style={{ color: '#fff', fontSize: 25, transition: 'all 0.3s', textDecoration: 'none' }}
-                            onMouseOver={e => e.currentTarget.style.scale = '1.1'}
-                            onMouseOut={e => e.currentTarget.style.scale = '1'}
-                        >
-                            <i className="fab fa-linkedin-in" aria-label="linkedin"></i>
                         </a>
                     </div>
                 </div>

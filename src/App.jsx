@@ -4,6 +4,11 @@ import Navbar from './components/Navbar'
 import Footer from './components/Footer'
 import Products from './pages/Products'
 import ProductDetails from './pages/ProductDetails'
+import About from './pages/About'
+import Terms from './pages/Terms'
+import Shipping from './pages/Shipping'
+// import Refund from './pages/Refund'
+// import Privacy from './pages/Privacy'
 import Home from './pages/Home'
 
 // Component to handle automatic scroll to top on route changes
@@ -34,6 +39,11 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/products" element={<Products />} />
           <Route path="/product/:id" element={<ProductDetails />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/terms" element={<Terms />} />
+          <Route path="/shipping" element={<Shipping />} />
+          {/* <Route path="/refund" element={<Refund />} /> */}
+          {/* <Route path="/privacy" element={<Privacy />} /> */}
         </Routes>
         <Footer />
 
