@@ -100,13 +100,25 @@ const Products = () => {
             transform: translateY(0) scale(1);
         }
     }
+    /* Responsive tweaks for filter bar and grid */
+    @media (max-width: 640px) {
+        .products-filter-grid {
+            grid-template-columns: 1fr !important;
+            gap: 1rem !important;
+        }
+        .products-filter-actions {
+            flex-direction: column !important;
+            gap: 0.75rem !important;
+            align-items: stretch !important;
+        }
+    }
     `;
 
     return (
-        <div className="container mx-auto px-4 py-8">
+        <div className="container mx-auto px-2 sm:px-4 py-6 sm:py-8">
             <style>{gridAnimationStyle}</style>
-            <div className="text-center mb-8">
-                <h1 className="text-4xl font-bold text-gray-800 mb-4">
+            <div className="text-center mb-6 sm:mb-8">
+                <h1 className="text-3xl sm:text-4xl font-bold text-gray-800 mb-3 sm:mb-4">
                     <span
                         style={{
                             display: 'inline-block',
@@ -118,18 +130,48 @@ const Products = () => {
                         All Products
                     </span>
                 </h1>
-                <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+                <p className="text-base sm:text-lg text-gray-600 max-w-2xl mx-auto">
                     Discover our complete collection of beautiful boho furniture pieces.
                 </p>
             </div>
 
             {/* Filter Bar */}
-            <div className="bg-transparent rounded-lg p-6 mb-4 transition-all duration-500 ease-in-out"
+            <div
+                className="bg-transparent border-none p-3 sm:p-6 mb-4 transition-all duration-700 ease-[cubic-bezier(.23,1.01,.32,1)]"
+                style={{
+                    // boxShadow: '0 4px 32px 0 rgba(34,197,94,0.08)',
+                    animation: 'filterBarFadeIn 0.8s cubic-bezier(.23,1.01,.32,1) both'
+                }}
             >
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
+                <style>
+                    {`
+                    @keyframes filterBarFadeIn {
+                        0% {
+                            opacity: 0;
+                            transform: translateY(-24px) scale(0.98);
+                        }
+                        100% {
+                            opacity: 1;
+                            transform: translateY(0) scale(1);
+                        }
+                    }
+                    .filter-fadein {
+                        opacity: 0;
+                        transform: translateY(24px) scale(0.98);
+                        animation: filterItemFadeIn 0.7s cubic-bezier(.23,1.01,.32,1) forwards;
+                    }
+                    @keyframes filterItemFadeIn {
+                        to {
+                            opacity: 1;
+                            transform: translateY(0) scale(1);
+                        }
+                    }
+                    `}
+                </style>
+                <div className="grid products-filter-grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3 sm:gap-4">
                     {/* Search */}
-                    <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-2">
+                    <div className="filter-fadein" style={{ animationDelay: '60ms' }}>
+                        <label className="block text-sm font-medium text-gray-700 mb-1 sm:mb-2">
                             Search
                         </label>
                         <input
@@ -137,19 +179,19 @@ const Products = () => {
                             placeholder="Search products..."
                             value={searchTerm}
                             onChange={(e) => setSearchTerm(e.target.value)}
-                            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-300"
+                            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-300 text-sm shadow-sm focus:shadow-md"
                         />
                     </div>
 
                     {/* Category Filter */}
-                    <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-2">
+                    <div className="filter-fadein" style={{ animationDelay: '120ms' }}>
+                        <label className="block text-sm font-medium text-gray-700 mb-1 sm:mb-2">
                             Category
                         </label>
                         <select
                             value={selectedCategory}
                             onChange={(e) => setSelectedCategory(e.target.value)}
-                            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-300"
+                            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-300 text-sm shadow-sm focus:shadow-md"
                         >
                             {categories.map(category => (
                                 <option key={category} value={category}>
@@ -160,8 +202,8 @@ const Products = () => {
                     </div>
 
                     {/* Price Range */}
-                    <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-2">
+                    <div className="filter-fadein" style={{ animationDelay: '180ms' }}>
+                        <label className="block text-sm font-medium text-gray-700 mb-1 sm:mb-2">
                             Price Range: ${priceRange[0]} - ${priceRange[1]}
                         </label>
                         <div className="flex gap-2">
@@ -169,28 +211,30 @@ const Products = () => {
                                 type="number"
                                 placeholder="Min"
                                 value={priceRange[0]}
+                                min={0}
                                 onChange={(e) => setPriceRange([parseInt(e.target.value) || 0, priceRange[1]])}
-                                className="w-1/2 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-300"
+                                className="w-1/2 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-300 text-sm shadow-sm focus:shadow-md"
                             />
                             <input
                                 type="number"
                                 placeholder="Max"
                                 value={priceRange[1]}
+                                min={0}
                                 onChange={(e) => setPriceRange([priceRange[0], parseInt(e.target.value) || 2000])}
-                                className="w-1/2 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-300"
+                                className="w-1/2 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-300 text-sm shadow-sm focus:shadow-md"
                             />
                         </div>
                     </div>
 
                     {/* Rating Filter */}
-                    <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-2">
+                    <div className="filter-fadein" style={{ animationDelay: '240ms' }}>
+                        <label className="block text-sm font-medium text-gray-700 mb-1 sm:mb-2">
                             Min Rating: {minRating}+
                         </label>
                         <select
                             value={minRating}
                             onChange={(e) => setMinRating(parseFloat(e.target.value))}
-                            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-300"
+                            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-300 text-sm shadow-sm focus:shadow-md"
                         >
                             <option value={0}>Any Rating</option>
                             <option value={4.5}>4.5+ Stars</option>
@@ -200,14 +244,14 @@ const Products = () => {
                     </div>
 
                     {/* Sort */}
-                    <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-2">
+                    <div className="filter-fadein" style={{ animationDelay: '300ms' }}>
+                        <label className="block text-sm font-medium text-gray-700 mb-1 sm:mb-2">
                             Sort By
                         </label>
                         <select
                             value={sortBy}
                             onChange={(e) => setSortBy(e.target.value)}
-                            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-300"
+                            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-300 text-sm shadow-sm focus:shadow-md"
                         >
                             <option value="name">Name A-Z</option>
                             <option value="price-low">Price: Low to High</option>
@@ -219,14 +263,20 @@ const Products = () => {
                 </div>
 
                 {/* Clear Filters Button */}
-                <div className="mt-4 flex justify-between items-center">
+                <div
+                    className="mt-4 flex products-filter-actions justify-between items-center gap-3 sm:gap-0 filter-fadein"
+                    style={{ animationDelay: '400ms' }}
+                >
                     <button
                         onClick={clearFilters}
-                        className="px-4 py-2 text-sm font-bold text-white bg-green-600 rounded-md hover:bg-green-700 transition-colors duration-300"
+                        className="px-4 py-2 text-sm font-bold text-white bg-green-600 rounded-md hover:bg-green-700 transition-colors duration-300 w-full sm:w-auto shadow-md"
+                        style={{
+                            transition: 'background 0.3s, box-shadow 0.3s',
+                        }}
                     >
                         Clear All Filters
                     </button>
-                    <span className="text-m font-bold text-gray-600 transition-all duration-300">
+                    <span className="text-m font-bold text-gray-600 transition-all duration-300 text-center w-full sm:w-auto">
                         {filteredProducts.length} product{filteredProducts.length !== 1 ? 's' : ''} found
                     </span>
                 </div>
@@ -236,7 +286,16 @@ const Products = () => {
             {filteredProducts.length > 0 ? (
                 <div
                     key={animateKey}
-                    className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
+                    className="
+                        grid 
+                        grid-cols-1 
+                        xs:grid-cols-2 
+                        sm:grid-cols-2 
+                        md:grid-cols-3 
+                        lg:grid-cols-4 
+                        gap-4 
+                        sm:gap-6
+                    "
                     style={{
                         transition: 'opacity 0.5s cubic-bezier(.23,1.01,.32,1), transform 0.5s cubic-bezier(.23,1.01,.32,1)',
                         opacity: 1,
@@ -247,8 +306,9 @@ const Products = () => {
                             key={product.id}
                             className="product-fadein"
                             style={{
-                                animationDelay: `${idx * 60 + 60}ms`,
+                                animationDelay: `${idx * 250 + 60}ms`,
                                 willChange: 'opacity, transform',
+                                minWidth: 0, // fix overflow on mobile
                             }}
                         >
                             <ProductCard product={product} />
@@ -257,7 +317,7 @@ const Products = () => {
                 </div>
             ) : (
                 <div className="text-center py-12 animate-fadein">
-                    <p className="text-lg text-gray-600 mb-4 transition-all duration-500">No products found matching your criteria.</p>
+                    <p className="text-base sm:text-lg text-gray-600 mb-4 transition-all duration-500">No products found matching your criteria.</p>
                     <button
                         onClick={clearFilters}
                         className="px-6 py-2 bg-green-600 text-white font-bold rounded-md hover:bg-green-700 transition-colors duration-300"

@@ -218,10 +218,8 @@ function ContactUs() {
                             </div>
                             <button
                                 type="submit"
-                                className="btn"
+                                className="btn bg-green-600 hover:bg-green-700 text-white font-bold"
                                 style={{
-                                    background: '#16a34a',
-                                    color: '#fff',
                                     fontWeight: 700,
                                     border: 'none',
                                     borderRadius: '10px',
