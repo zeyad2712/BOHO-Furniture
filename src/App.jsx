@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom'
-import Navbar1 from './components/Navbar1'
+import Navbar from './components/Navbar'
 import Footer from './components/Footer'
 import Products from './pages/Products'
 import ProductDetails from './pages/ProductDetails'
@@ -29,7 +29,7 @@ function App() {
     <Router>
       <div className="App">
         <ScrollToTop />
-        <Navbar1 />
+        <Navbar />
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/products" element={<Products />} />

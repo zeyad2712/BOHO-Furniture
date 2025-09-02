@@ -1,6 +1,7 @@
 import React from 'react';
 import '../App.css';
 import Hero from '../components/Hero';
+import ServicesSection from '../components/ServicesSection';
 import CategorisSection from '../components/CategorisSection';
 import NewArrivals from '../components/NewArrivals';
 import BestSelling from '../components/BestSelling';
@@ -12,6 +13,7 @@ function Home() {
   return (
     <>
       <Hero />
+      <ServicesSection />
       <CategorisSection />
       <NewArrivals />
       <BestSelling />

@@ -244,7 +244,7 @@ const ProductDetails = () => {
                             {/* Wishlist Button */}
                             <button
 
-                                className="bg-orange-50 text-black py-2.5 px-4 border border-orange-900 rounded-lg font-medium hover:bg-green-600 disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors text-base"
+                                className="bg-orange-50 text-black py-2.5 px-4 border border-orange-900 rounded-lg font-medium hover:bg-green-600 hover:text-white disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors"
                             >
                                 <i className="fa-regular fa-heart"></i>
                             </button>
@@ -303,7 +303,7 @@ const ProductDetails = () => {
                         </nav>
                     </div>
 
-                    <div className="py-6">
+                    <div className="py-6 px-3">
                         {activeTab === 'description' && (
                             <div className="prose max-w-none">
                                 <h3 className="text-lg font-semibold text-gray-800 mb-3">Product Description</h3>
