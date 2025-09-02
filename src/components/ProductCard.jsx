@@ -43,14 +43,21 @@ const ProductCard = ({ product }) => {
     const hasDiscount = originalPrice && originalPrice > price;
     const discountPercentage = hasDiscount ? Math.round(((originalPrice - price) / originalPrice) * 100) : 0;
 
+    const handleAddToCart = (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        // Add to cart functionality would go here
+        alert(`Added ${name} to cart!`);
+    };
+
     return (
-        <Link to={`/products/${id}`}>
-            <div className="card h-100 shadow-sm position-relative border-none"
-                style={{ transform: 'scale(1)', transition: 'transform 0.3s cubic-bezier(0.4,0,0.2,1)', borderRadius: '10px' }}
-                onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.05)'}
-                onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
-            >
-                {/* Image Container */}
+        <div className="card h-100 shadow-sm position-relative border-none"
+            style={{ transform: 'scale(1)', transition: 'transform 0.3s cubic-bezier(0.4,0,0.2,1)', borderRadius: '10px' }}
+            onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.05)'}
+            onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
+        >
+            {/* Image Container - Clickable for navigation */}
+            <Link to={`/product/${id}`} className="text-decoration-none">
                 <div className="position-relative">
                     <img
                         src={image}
@@ -93,8 +100,10 @@ const ProductCard = ({ product }) => {
                         </div>
                     )}
                 </div>
+            </Link>
 
-                {/* Product Info */}
+            {/* Product Info - Clickable for navigation */}
+            <Link to={`/product/${id}`} className="text-decoration-none">
                 <div className="card-body d-flex flex-column">
                     {/* Category */}
                     <div className="text-uppercase text-secondary small fw-semibold mb-2">
@@ -123,35 +132,38 @@ const ProductCard = ({ product }) => {
                             </span>
                         )}
                     </div>
-
-                    {/* Add to Cart Button */}
-                    <button
-                        type="button"
-                        disabled={!inStock}
-                        className={`btn mt-auto w-100 py-2 ${inStock
-                            ? 'btn-dark'
-                            : 'btn-secondary disabled'
-                            }`}
-                        style={{
-                            background: '#16a34a',
-                            transition: 'scale 0.3s cubic-bezier(0.4,0,0.2,1)',
-                            border: 'none',
-                            borderRadius: '10px',
-                            fontSize: '17px',
-                            fontWeight: '700',
-                        }}
-                        onMouseEnter={e => {
-                            e.currentTarget.style.scale = '1.02';
-                        }}
-                        onMouseLeave={e => {
-                            e.currentTarget.style.scale = '1';
-                        }}
-                    >
-                        {inStock ? 'Add to Cart' : 'Out of Stock'}
-                    </button>
                 </div>
+            </Link>
+
+            {/* Add to Cart Button - Separate from navigation */}
+            <div className="px-3 pb-3">
+                <button
+                    type="button"
+                    disabled={!inStock}
+                    onClick={handleAddToCart}
+                    className={`btn mt-auto w-100 py-2 ${inStock
+                        ? 'btn-dark'
+                        : 'btn-secondary disabled'
+                        }`}
+                    style={{
+                        background: '#16a34a',
+                        transition: 'scale 0.3s cubic-bezier(0.4,0,0.2,1)',
+                        border: 'none',
+                        borderRadius: '10px',
+                        fontSize: '17px',
+                        fontWeight: '700',
+                    }}
+                    onMouseEnter={e => {
+                        e.currentTarget.style.scale = '1.02';
+                    }}
+                    onMouseLeave={e => {
+                        e.currentTarget.style.scale = '1';
+                    }}
+                >
+                    {inStock ? 'Add to Cart' : 'Out of Stock'}
+                </button>
             </div>
-        </Link>
+        </div>
     );
 };
 

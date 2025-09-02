@@ -16,7 +16,7 @@ function useInView(ref, options = {}) {
                     observer.disconnect();
                 }
             },
-            { threshold: 0.2, ...options }
+            { threshold: 0.2, ...options } 
         );
         observer.observe(ref.current);
         return () => observer.disconnect();
