@@ -72,7 +72,7 @@ const ProductCard = ({ product }) => {
                     )}
 
                     {/* Wishlist Button */}
-                    <button
+                    {/* <button
                         type="button"
                         onClick={() => setIsWishlisted(!isWishlisted)}
                         className={`btn btn-sm rounded-circle position-absolute top-0 end-0 m-2 ${isWishlisted
@@ -82,7 +82,7 @@ const ProductCard = ({ product }) => {
                         style={{ zIndex: 2 }}
                     >
                         <span className="fs-5">{isWishlisted ? '❤️' : '🤍'}</span>
-                    </button>
+                    </button> */}
 
                     {/* Out of Stock Overlay */}
                     {!inStock && (
