@@ -1,58 +1,93 @@
-import { useState } from 'react'
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-// import './App.css'
-import Navbar from './components/Navbar'
+import React, { useEffect } from 'react'
+import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom'
 import Navbar1 from './components/Navbar1'
 import Footer from './components/Footer'
-import Hero from './components/Hero'
-import CategorisSection from './components/CategorisSection'
-import BestSelling from './components/BestSelling'
-// import Home from './pages/Home'
 import Products from './pages/Products'
-import NewArrivals from './components/NewArrivals'
-import AboutUs from './components/AboutUs'
-import ContactUs from './components/ContactUs'
-import Reviews from './components/Reviews'
+import ProductDetails from './pages/ProductDetails'
+import Home from './pages/Home'
+
+// Component to handle automatic scroll to top on route changes
+function ScrollToTop() {
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+
+  return null;
+}
+
 function App() {
-  // const [count, setCount] = useState(0)
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    })
+  }
 
   return (
     <Router>
       <div className="App">
+        <ScrollToTop />
         <Navbar1 />
         <Routes>
-          <Route path="/" element={
-            <>
-              <Hero />
-              <CategorisSection />
-              <NewArrivals />
-              <BestSelling />
-              <AboutUs />
-              <Reviews />
-              <ContactUs />
-            </>
-          } />
-          <Route path="/home" element={
-            <>
-              <Hero />
-              <CategorisSection />
-              <NewArrivals />
-              <BestSelling />
-              <AboutUs />
-              <Reviews />
-              <ContactUs />
-            </>
-          } />
+          <Route path="/" element={<Home />} />
           <Route path="/products" element={<Products />} />
-          {/* Add more routes here as needed */}
-
+          <Route path="/product/:id" element={<ProductDetails />} />
         </Routes>
         <Footer />
+
+        {/* ScrollToTop Button */}
+        <ScrollToTopButton />
       </div>
     </Router>
   )
+}
+
+// Separate component for the scroll-to-top button
+function ScrollToTopButton() {
+  const [showScroll, setShowScroll] = React.useState(false);
+
+  React.useEffect(() => {
+    const handleScroll = () => {
+      setShowScroll(window.scrollY > 100);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  const scrollToTop = () => {
+    setTimeout(() => {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth',
+      });
+    }, 300); // 300ms delay before scrolling to top
+  }
+
+  return showScroll ? (
+    <button
+      onClick={scrollToTop}
+      style={{
+        position: 'fixed',
+        bottom: '3%',
+        right: '2%',
+        zIndex: 200,
+        background: '#22c55e',
+        border: 'none',
+        padding: '10px',
+        borderRadius: '50%',
+        boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)',
+        transition: 'all 0.3s ease',
+        cursor: 'pointer',
+        opacity: showScroll ? 1 : 0,
+        pointerEvents: showScroll ? 'auto' : 'none',
+      }}
+      aria-label="Scroll to top"
+    >
+      <i className="fa-solid fa-arrow-up" style={{ fontSize: '20px', color: '#fff' }}></i>
+    </button>
+  ) : null;
 }
 
 export default App
