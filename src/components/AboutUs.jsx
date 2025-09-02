@@ -1,4 +1,5 @@
 import React, { useRef, useEffect, useState } from 'react'
+import { Link } from 'react-router-dom';
 
 /**
  * Animation hook: returns true when the ref is in view (like in NewArrivals.jsx)
@@ -160,8 +161,8 @@ function AboutUs() {
                             </p> */}
 
                             {/* Learn More Button */}
-                            <a
-                                href="/about"
+                            <Link
+                                to="/about"
                                 className="btn mt-3 float-right"
                                 style={{
                                     background: '#16a34a',
@@ -176,7 +177,7 @@ function AboutUs() {
                                     opacity: inView ? 1 : 0,
                                     transform: inView ? 'translateY(0px)' : 'translateY(20px)',
                                 }}
-                            >Learn More</a>
+                            >Learn More</Link>
                         </div>
                     </div>
                 </div>
