@@ -97,6 +97,7 @@ const product = {
 
 ## Getting Started
 
+
 1. **Clone the repository**
   ```sh
   git clone https://github.com/zeyad2712/BOHO-Furniture.git
