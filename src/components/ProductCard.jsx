@@ -27,7 +27,6 @@ const StarRating = ({ rating }) => {
 
 const ProductCard = ({ product }) => {
     const [isWishlisted, setIsWishlisted] = useState(false);
-
     const {
         id,
         name,
