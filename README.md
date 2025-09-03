@@ -1,6 +1,47 @@
+
 # BOHO Furniture
 
-A modern e-commerce website for boho furniture built with React and Vite.
+BOHO Furniture is a modern, feature-rich e-commerce website for boho furniture, built with React and Vite. It offers a beautiful, responsive UI, advanced product browsing, cart management, and more.
+
+---
+
+## Table of Contents
+
+- [Project Overview](#project-overview)
+- [Live Demo](#live-demo)
+- [Features](#features)
+- [Getting Started](#getting-started)
+- [Technologies Used](#technologies-used)
+- [Project Structure](#project-structure)
+- [Main Components](#main-components)
+- [Context & State Management](#context--state-management)
+- [Pages](#pages)
+- [Utilities](#utilities)
+- [Configuration](#configuration)
+- [Contributing](#contributing)
+- [License](#license)
+
+---
+
+## Project Overview
+
+BOHO Furniture is a full-stack e-commerce platform focused on unique, handcrafted bohemian furniture. It features:
+
+- Modern, responsive design
+- Product catalog with filtering, sorting, and search
+- Product details with reviews, shipping, and returns info
+- Cart and wishlist management
+- Dark mode toggle
+- Google Sheets integration for contact submissions
+- Accessibility and smooth animations
+
+---
+
+## Live Demo
+
+> _Add your deployed site URL here if available._
+
+---
 
 ## Features
 
@@ -40,12 +81,38 @@ const product = {
 <ProductCard product={product} />
 ```
 
+### Other Features
+
+- **Home Page**: Hero section, services, categories, new arrivals, best selling, reviews, about us, contact
+- **Products Page**: Filter by category, price, rating, search, sort, animated grid
+- **Product Details**: Multiple images, color selection, quantity, add to cart, wishlist, tabs for description, reviews, shipping, returns
+- **Cart**: Add, remove, update quantity, clear cart, persistent via localStorage
+- **Dark Mode**: Toggle between light and dark themes
+- **Contact Form**: Submissions saved locally and optionally sent to Google Sheets
+- **Footer**: Social links, quick navigation, legal info
+- **Accessibility**: ARIA labels, keyboard navigation, color contrast
+- **Animations**: Fade, slide, scale, number count, staggered grid
+
+---
+
 ## Getting Started
 
-1. Clone the repository
-2. Install dependencies: `npm install`
-3. Start the development server: `npm run dev`
-4. Open [http://localhost:5173](http://localhost:5173) in your browser
+1. **Clone the repository**
+  ```sh
+  git clone https://github.com/zeyad2712/BOHO-Furniture.git
+  cd BOHO-Furniture
+  ```
+2. **Install dependencies**
+  ```sh
+  npm install
+  ```
+3. **Start the development server**
+  ```sh
+  npm run dev
+  ```
+4. **Open** [http://localhost:5173](http://localhost:5173) in your browser
+
+---
 
 ## Technologies Used
 
@@ -56,6 +123,8 @@ const product = {
 - React Icons
 - Bootstrap (via CDN)
 
+---
+
 ## Project Structure
 
 ```
@@ -65,27 +134,106 @@ src/
 │   ├── BestSelling.jsx      # Showcase component using ProductCard
 │   ├── Navbar.jsx
 │   ├── Hero.jsx
+│   ├── DarkModeToggoler.jsx
+│   ├── Footer.jsx
+│   ├── Reviews.jsx
+│   ├── ContactUs.jsx
+│   ├── AboutUs.jsx
+│   ├── NewArrivals.jsx
+│   ├── ServicesSection.jsx
+│   ├── CategorisSection.jsx
+│   ├── ScrollToTop.jsx
 │   └── ...
 ├── pages/
 │   ├── Home.jsx             # Home page component
-│   └── Products.jsx         # Products page component
+│   ├── Products.jsx         # Products page component
+│   ├── ProductDetails.jsx   # Product details page
+│   ├── About.jsx            # About page
+│   ├── Terms.jsx            # Terms and conditions
+│   ├── Shipping.jsx         # Shipping info
+│   ├── Refund.jsx           # Refund policy
+│   ├── Privacy.jsx          # Privacy policy
+│   └── ...
+├── context/
+│   └── CartContext.jsx      # Cart state management
 ├── data/
-│   └── ProductsData.js      # Product data and utilities
+│   ├── ProductsData.js      # Product data and utilities
+│   └── contactSubmissions.json # Contact form submissions
+├── utils/
+│   ├── contactStorage.js    # Local contact form storage
+│   └── googleSheetsIntegration.js # Google Sheets API integration
+├── assets/
+│   └── images/              # Product and hero images
 └── ...
 ```
 
-## Routing
+---
 
-The application uses React Router DOM for navigation:
+## Main Components
 
-- `/` - Home page with hero, categories, and best selling products
-- `/home` - Same as home page
-- `/products` - All products page displaying the complete product catalog
+- **Navbar**: Top navigation bar with links, dropdowns, and dark mode toggle
+- **Hero**: Eye-catching intro section on the home page
+- **ServicesSection**: Highlights store services
+- **CategorisSection**: Displays product categories
+- **NewArrivals**: Shows latest products
+- **BestSelling**: Highlights popular products
+- **ProductCard**: Individual product display with actions
+- **Reviews**: Customer testimonials
+- **AboutUs**: Brand story and values
+- **ContactUs**: Contact form, Google Sheets integration
+- **Footer**: Social links, navigation, legal info
+- **ScrollToTop**: Button to scroll to top
+- **DarkModeToggoler**: Switch between light/dark themes
 
-### Navigation Features
+---
 
-- **Brand Logo**: Links to home page
-- **Home Link**: Navigation to home page
-- **Products Dropdown**: Contains links to different product categories
-- **Categories Link**: Scrolls to categories section
-- **Contact Link**: Placeholder for contact page
+## Context & State Management
+
+- **CartContext**: Provides cart state and actions (`addToCart`, `removeFromCart`, `updateQuantity`, `clearCart`, `getCartTotal`, `getCartItemsCount`). Cart is persisted in localStorage.
+- **useCart**: Custom hook to access cart context
+
+---
+
+## Data
+
+- **ProductsData.js**: Contains product objects with fields like `id`, `name`, `category`, `price`, `originalPrice`, `image`, `rating`, `reviews`, `inStock`, `features`, `dimensions`, `colors`, `description`.
+- **contactSubmissions.json**: Stores contact form submissions locally
+
+---
+
+## Pages
+
+- **Home.jsx**: Main landing page, imports all showcase components
+- **Products.jsx**: Product catalog with filters, sorting, search, animated grid
+- **ProductDetails.jsx**: Detailed product info, tabs for description, reviews, shipping, returns, add to cart, wishlist
+- **About.jsx**: Brand story, values, team, statistics, CTA
+- **Terms.jsx**: Terms and conditions
+- **Shipping.jsx**: Shipping information
+- **Refund.jsx**: Refund policy
+- **Privacy.jsx**: Privacy policy
+
+---
+
+## Utilities
+
+- **contactStorage.js**: Handles saving contact form submissions locally
+- **googleSheetsIntegration.js**: Sends contact form data to Google Sheets via Apps Script
+
+---
+
+## Configuration
+
+- **vite.config.js**: Vite configuration
+- **eslint.config.js**: ESLint rules
+
+---
+
+## Contributing
+
+Contributions are welcome! Please open issues or submit pull requests for improvements, bug fixes, or new features.
+
+---
+
+## License
+
+This project is licensed under the MIT License. See [LICENSE](LICENSE) for details.
