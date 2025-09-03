@@ -31,7 +31,7 @@ function Shipping() {
     }, []);
 
     return (
-        <div className="min-h-screen bg-white">
+        <div className="min-h-screen">
             <style>
                 {`
           @keyframes fadeInUp {

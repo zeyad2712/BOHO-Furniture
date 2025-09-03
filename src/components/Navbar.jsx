@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
+import { useCart } from '../context/CartContext';
 // import ProductsData from '../data/ProductsData.js';
 
 const Navbar = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const { items, removeFromCart, updateQuantity, clearCart, getCartTotal, getCartItemsCount } = useCart();
 
     useEffect(() => {
         // Initialize Bootstrap dropdowns
@@ -432,8 +434,13 @@ const Navbar = () => {
                                 </a>
                             </li>
                             <li>
-                                <button type="button" class="btn btn-outline-light" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                <button type="button" class="btn btn-outline-light position-relative" data-bs-toggle="modal" data-bs-target="#exampleModal">
                                     <i className="fa-solid fa-cart-shopping"></i> Cart
+                                    {getCartItemsCount() > 0 && (
+                                        <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" style={{ fontSize: '0.7rem' }}>
+                                            {getCartItemsCount()}
+                                        </span>
+                                    )}
                                 </button>
                             </li>
                         </ul>
@@ -725,23 +732,16 @@ const Navbar = () => {
                             ></button>
                         </div>
                         <div className="modal-body" style={{ padding: "1.5rem 1.5rem 1rem", overflowY: "auto", maxHeight: 420 }}>
-                            {/* Example cart items - replace with dynamic content as needed */}
-
-                            {/*
-                              Example: Get the first product from ProductsData.js and display its info.
-                              Assumes you have: import ProductsData from '../data/ProductsData';
-                            */}
-                            {(() => {
-                                const product = (typeof ProductsData !== "undefined" && ProductsData.length > 0)
-                                    ? ProductsData[0]
-                                    : {
-                                        name: "Sample Product",
-                                        description: "No product data found.",
-                                        price: 0,
-                                        image: "",
-                                    };
-                                return (
+                            {items.length === 0 ? (
+                                <div className="text-center py-5">
+                                    <i className="fa-solid fa-cart-shopping" style={{ fontSize: "3rem", color: "#d1d5db", marginBottom: "1rem" }}></i>
+                                    <h5 style={{ color: "#6b7280", marginBottom: "0.5rem" }}>Your cart is empty</h5>
+                                    <p style={{ color: "#9ca3af", fontSize: "0.9rem" }}>Add some products to get started!</p>
+                                </div>
+                            ) : (
+                                items.map((item) => (
                                     <div
+                                        key={item.id}
                                         className="card mb-3 shadow-sm border-0"
                                         style={{
                                             maxWidth: "100%",
@@ -763,9 +763,9 @@ const Navbar = () => {
                                                 }}
                                             >
                                                 <img
-                                                    src={product.image || "../assets/images/hero-page/hero-image.jpg"}
+                                                    src={item.image || "../assets/images/hero-page/hero-image.jpg"}
                                                     className="img-fluid"
-                                                    alt={product.name}
+                                                    alt={item.name}
                                                     style={{
                                                         width: "100%",
                                                         height: "100%",
@@ -788,7 +788,7 @@ const Navbar = () => {
                                                                 letterSpacing: "0.01em",
                                                             }}
                                                         >
-                                                            {product.name}
+                                                            {item.name}
                                                         </h5>
                                                         <p
                                                             className="card-text mb-2"
@@ -799,7 +799,7 @@ const Navbar = () => {
                                                                 lineHeight: 1.4,
                                                             }}
                                                         >
-                                                            {product.description}
+                                                            {item.description}
                                                         </p>
                                                     </div>
                                                     <div className="d-flex align-items-center justify-content-between mt-2">
@@ -811,7 +811,7 @@ const Navbar = () => {
                                                                 letterSpacing: "0.01em",
                                                             }}
                                                         >
-                                                            ${product.price ? product.price.toFixed(2) : "0.00"}
+                                                            ${(item.price * item.quantity).toFixed(2)}
                                                         </span>
                                                         <div className="d-flex align-items-center gap-2">
                                                             <button
@@ -828,6 +828,7 @@ const Navbar = () => {
                                                                     transition: "background 0.2s, color 0.2s",
                                                                 }}
                                                                 title="Decrease quantity"
+                                                                onClick={() => updateQuantity(item.id, item.quantity - 1)}
                                                             >
                                                                 <i className="fa fa-minus"></i>
                                                             </button>
@@ -841,7 +842,7 @@ const Navbar = () => {
                                                                     fontSize: "1.05rem",
                                                                 }}
                                                             >
-                                                                1
+                                                                {item.quantity}
                                                             </span>
                                                             <button
                                                                 className="btn btn-sm"
@@ -857,6 +858,7 @@ const Navbar = () => {
                                                                     transition: "background 0.2s, color 0.2s",
                                                                 }}
                                                                 title="Increase quantity"
+                                                                onClick={() => updateQuantity(item.id, item.quantity + 1)}
                                                             >
                                                                 <i className="fa fa-plus"></i>
                                                             </button>
@@ -874,6 +876,7 @@ const Navbar = () => {
                                                             gap: 4,
                                                         }}
                                                         title="Remove from cart"
+                                                        onClick={() => removeFromCart(item.id)}
                                                     >
                                                         <i className="fa fa-trash me-1"></i> Remove
                                                     </button>
@@ -881,9 +884,8 @@ const Navbar = () => {
                                             </div>
                                         </div>
                                     </div>
-                                );
-                            })()}
-
+                                ))
+                            )}
                         </div>
                         <div
                             className="modal-footer border-none"
@@ -900,63 +902,71 @@ const Navbar = () => {
                             }}
                         >
                             {/* Cart summary */}
-                            <div
-                                className="d-flex justify-content-between align-items-center w-100 mt-4 mb-2 px-1"
-                                style={{
-                                    fontWeight: 600,
-                                    fontSize: "1.08rem",
-                                    color: "#166534",
-                                    borderTop: "1px solid #bbf7d0",
-                                    paddingTop: "1rem",
-                                }}
-                            >
-                                <span>
-                                    <i className="fa-solid fa-basket-shopping me-2" style={{ color: "#16a34a" }}></i>
-                                    Total (1 item)
-                                </span>
-                                <span style={{ fontWeight: 800, fontSize: "1.15rem" }}>$129.00</span>
-                            </div>
+                            {items.length > 0 && (
+                                <div
+                                    className="d-flex justify-content-between align-items-center w-100 mt-4 mb-2 px-1"
+                                    style={{
+                                        fontWeight: 600,
+                                        fontSize: "1.08rem",
+                                        color: "#166534",
+                                        borderTop: "1px solid #bbf7d0",
+                                        paddingTop: "1rem",
+                                    }}
+                                >
+                                    <span>
+                                        <i className="fa-solid fa-basket-shopping me-2" style={{ color: "#16a34a" }}></i>
+                                        Total ({getCartItemsCount()} {getCartItemsCount() === 1 ? 'item' : 'items'})
+                                    </span>
+                                    <span style={{ fontWeight: 800, fontSize: "1.15rem" }}>${getCartTotal().toFixed(2)}</span>
+                                </div>
+                            )}
 
                             {/* Buttons for clear and check out */}
-                            <div className="d-flex justify-content-between align-items-center w-100 mt-4 mb-2 px-1" style={{ gap: "0.5rem" }}>
-                                <button
-                                    type="button"
-                                    className="btn"
-                                    style={{
-                                        background: "#fff",
-                                        color: "#dc2626",
-                                        border: "1.5px solid #fecaca",
-                                        fontWeight: 600,
-                                        borderRadius: "8px",
-                                        padding: "0.55rem 1.2rem",
-                                        fontSize: "1.01rem",
-                                        transition: "background 0.2s, color 0.2s",
-                                    }}
-                                    onClick={() => {
-                                        // Clear cart logic here
-                                        alert("Cart cleared! (Replace this with your clear cart logic)");
-                                    }}
-                                >
-                                    <i className="fa fa-trash me-2"></i>Clear
-                                </button>
-                                <button
-                                    type="button"
-                                    className="btn"
-                                    style={{
-                                        background: "linear-gradient(90deg, #22c55e 0%, #bbf7d0 100%)",
-                                        color: "#fff",
-                                        fontWeight: 700,
-                                        border: "none",
-                                        borderRadius: "8px",
-                                        padding: "0.55rem 1.5rem",
-                                        fontSize: "1.01rem",
-                                        boxShadow: "0 2px 8px rgba(34,197,94,0.10)",
-                                        transition: "background 0.2s, color 0.2s",
-                                    }}
-                                >
-                                    <i className="fa fa-credit-card me-2"></i>Check Out
-                                </button>
-                            </div>
+                            {items.length > 0 && (
+                                <div className="d-flex justify-content-between align-items-center w-100 mt-4 mb-2 px-1" style={{ gap: "0.5rem" }}>
+                                    <button
+                                        type="button"
+                                        className="btn"
+                                        style={{
+                                            background: "#fff",
+                                            color: "#dc2626",
+                                            border: "1.5px solid #fecaca",
+                                            fontWeight: 600,
+                                            borderRadius: "8px",
+                                            padding: "0.55rem 1.2rem",
+                                            fontSize: "1.01rem",
+                                            transition: "background 0.2s, color 0.2s",
+                                        }}
+                                        onClick={() => {
+                                            if (window.confirm("Are you sure you want to clear your cart?")) {
+                                                clearCart();
+                                            }
+                                        }}
+                                    >
+                                        <i className="fa fa-trash me-2"></i>Clear
+                                    </button>
+                                    <button
+                                        type="button"
+                                        className="btn"
+                                        style={{
+                                            background: "linear-gradient(90deg, #22c55e 0%, #bbf7d0 100%)",
+                                            color: "#fff",
+                                            fontWeight: 700,
+                                            border: "none",
+                                            borderRadius: "8px",
+                                            padding: "0.55rem 1.5rem",
+                                            fontSize: "1.01rem",
+                                            boxShadow: "0 2px 8px rgba(34,197,94,0.10)",
+                                            transition: "background 0.2s, color 0.2s",
+                                        }}
+                                        onClick={() => {
+                                            alert("Checkout functionality would be implemented here!");
+                                        }}
+                                    >
+                                        <i className="fa fa-credit-card me-2"></i>Check Out
+                                    </button>
+                                </div>
+                            )}
                         </div>
                     </div>
                 </div>

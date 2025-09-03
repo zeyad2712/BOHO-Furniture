@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { productsData, getProductById } from '../data/ProductsData';
+import { useCart } from '../context/CartContext';
 import '../App.css';
 
 const ProductDetails = () => {
     const { id } = useParams();
     const navigate = useNavigate();
+    const { addToCart } = useCart();
     const [selectedImage, setSelectedImage] = useState(0);
     const [selectedColor, setSelectedColor] = useState('');
     const [quantity, setQuantity] = useState(1);
@@ -47,8 +49,22 @@ const ProductDetails = () => {
     }
 
     const handleAddToCart = () => {
-        // Add to cart functionality would go here
-        alert(`Added ${quantity} ${product.name} to cart!`);
+        if (product && product.inStock) {
+            // Add the product to cart with the selected quantity
+            addToCart(product, quantity);
+            
+            // Show success message
+            const button = document.querySelector('.add-to-cart-btn');
+            if (button) {
+                const originalText = button.textContent;
+                button.textContent = 'Added!';
+                button.style.background = '#22c55e';
+                setTimeout(() => {
+                    button.textContent = originalText;
+                    button.style.background = '#16a34a';
+                }, 1500);
+            }
+        }
     };
 
     const handleBuyNow = () => {
@@ -237,7 +253,7 @@ const ProductDetails = () => {
                             <button
                                 onClick={handleAddToCart}
                                 disabled={!product.inStock}
-                                className="flex-1 bg-green-600 text-white py-2.5 px-4 rounded-lg font-medium hover:bg-green-700 disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors text-base"
+                                className="add-to-cart-btn flex-1 bg-green-600 text-white py-2.5 px-4 rounded-lg font-medium hover:bg-green-700 disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors text-base"
                             >
                                 Add to Cart
                             </button>

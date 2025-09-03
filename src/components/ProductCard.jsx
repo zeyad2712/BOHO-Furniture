@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { getProductById } from '../data/ProductsData';
+import { useCart } from '../context/CartContext';
 // import { useParams } from 'react-router-dom';
 
 // Simple star rating component
@@ -27,6 +28,7 @@ const StarRating = ({ rating }) => {
 
 const ProductCard = ({ product }) => {
     const [isWishlisted, setIsWishlisted] = useState(false);
+    const { addToCart } = useCart();
     const {
         id,
         name,
@@ -45,8 +47,18 @@ const ProductCard = ({ product }) => {
     const handleAddToCart = (e) => {
         e.preventDefault();
         e.stopPropagation();
-        // Add to cart functionality would go here
-        alert(`Added ${name} to cart!`);
+        if (inStock) {
+            addToCart(product, 1);
+            // Show success message
+            const button = e.target;
+            const originalText = button.textContent;
+            button.textContent = 'Added!';
+            button.style.background = '#22c55e';
+            setTimeout(() => {
+                button.textContent = originalText;
+                button.style.background = '#16a34a';
+            }, 1500);
+        }
     };
 
     return (
