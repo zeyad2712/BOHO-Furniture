@@ -1,4 +1,5 @@
 import React, { useRef, useEffect, useState } from 'react';
+import { addContactSubmission, exportSubmissionsAsJSON, getAllContactSubmissions, exportAllToGoogleSheets } from '../utils/contactStorage';
 
 // Animation hook: returns true when the ref is in view (like in NewArrivals.jsx)
 function useInView(ref, options = {}) {
@@ -25,6 +26,7 @@ function useInView(ref, options = {}) {
 function ContactUs() {
     const sectionRef = useRef(null);
     const inView = useInView(sectionRef);
+    const [submissions, setSubmissions] = useState(getAllContactSubmissions());
 
     return (
         <>
@@ -147,19 +149,39 @@ function ContactUs() {
                                 display: 'flex',
                                 flexDirection: 'column',
                                 gap: 18,
-                                opacity: inView ? 1 : 0,
-                                transform: inView ? 'translateY(0px)' : 'translateY(30px)',
-                                transition: 'opacity 0.7s 0.32s cubic-bezier(0.4,0,0.2,1), transform 0.7s 0.32s cubic-bezier(0.4,0,0.2,1)'
                             }}
-                            onSubmit={e => {
+                            onSubmit={async (e) => {
                                 e.preventDefault();
-                                alert('Thank you for contacting us! We will get back to you soon.');
-                                e.target.reset();
+
+                                const formData = {
+                                    name: e.target.name.value,
+                                    phone: e.target.phone.value,
+                                    message: e.target.message.value,
+                                };
+
+                                try {
+                                    // Store the submission locally
+                                    const result = await addContactSubmission(formData);
+
+                                    if (result.success) {
+                                        alert("شكراً! تم إرسال رسالتك ✅");
+                                        e.target.reset();
+                                        // Refresh the submissions data
+                                        setSubmissions(getAllContactSubmissions());
+                                    } else {
+                                        alert("عذراً، حدث خطأ في حفظ البيانات. يرجى المحاولة مرة أخرى.");
+                                    }
+                                } catch (error) {
+                                    console.error('Error submitting form:', error);
+                                    alert("عذراً، حدث خطأ في إرسال النموذج. يرجى المحاولة مرة أخرى.");
+                                }
                             }}
                         >
                             <div style={{ display: 'flex', gap: 16, flexWrap: 'wrap' }}>
                                 <div style={{ flex: 1, minWidth: 120 }}>
-                                    <label htmlFor="name" style={{ color: '#166534', fontWeight: 500, marginBottom: 4, display: 'block' }}>Name</label>
+                                    <label htmlFor="name" style={{ color: '#166534', fontWeight: 500, marginBottom: 4, display: 'block' }}>
+                                        Name
+                                    </label>
                                     <input
                                         type="text"
                                         id="name"
@@ -173,18 +195,21 @@ function ContactUs() {
                                             border: '1.5px solid #bbf7d0',
                                             fontSize: 15,
                                             outline: 'none',
-                                            marginBottom: 0
                                         }}
                                     />
                                 </div>
+
                                 <div style={{ flex: 1, minWidth: 120 }}>
-                                    <label htmlFor="email" style={{ color: '#166534', fontWeight: 500, marginBottom: 4, display: 'block' }}>Email</label>
+                                    <label htmlFor="phone" style={{ color: '#166534', fontWeight: 500, marginBottom: 4, display: 'block' }}>
+                                        Phone Number
+                                    </label>
                                     <input
-                                        type="email"
-                                        id="email"
-                                        name="email"
+                                        type="number"
+                                        id="phone"
+                                        name="phone"
                                         required
-                                        placeholder="you@email.com"
+                                        placeholder="01XXXXXXXX"
+                                        pattern="^01\\d{8}$"
                                         style={{
                                             width: '100%',
                                             padding: '10px 12px',
@@ -192,13 +217,15 @@ function ContactUs() {
                                             border: '1.5px solid #bbf7d0',
                                             fontSize: 15,
                                             outline: 'none',
-                                            marginBottom: 0
                                         }}
                                     />
                                 </div>
                             </div>
+
                             <div>
-                                <label htmlFor="message" style={{ color: '#166534', fontWeight: 500, marginBottom: 4, display: 'block' }}>Message</label>
+                                <label htmlFor="message" style={{ color: '#166534', fontWeight: 500, marginBottom: 4, display: 'block' }}>
+                                    Message
+                                </label>
                                 <textarea
                                     id="message"
                                     name="message"
@@ -212,10 +239,11 @@ function ContactUs() {
                                         border: '1.5px solid #bbf7d0',
                                         fontSize: 15,
                                         outline: 'none',
-                                        resize: 'vertical'
+                                        resize: 'vertical',
                                     }}
                                 ></textarea>
                             </div>
+
                             <button
                                 type="submit"
                                 className="btn bg-green-600 hover:bg-green-700 text-white font-bold"
@@ -228,15 +256,117 @@ function ContactUs() {
                                     marginTop: 8,
                                     boxShadow: '0 2px 8px rgba(34,197,94,0.10)',
                                     cursor: 'pointer',
-                                    transition: 'background 0.2s, color 0.2s'
                                 }}
                             >
                                 <i className="fa-solid fa-paper-plane" style={{ marginRight: 8 }}></i>
                                 Send Message
                             </button>
                         </form>
+
+                        {/* Submission Statistics and Export Section */}
+                        {/* <div
+                            className="submission-stats"
+                            style={{
+                                flex: '1 1 100%',
+                                maxWidth: 800,
+                                margin: '20px auto 0',
+                                background: 'rgba(255,255,255,0.95)',
+                                borderRadius: 16,
+                                padding: '24px',
+                                boxShadow: '0 2px 12px rgba(139,69,19,0.07)',
+                                opacity: inView ? 1 : 0,
+                                transform: inView ? 'translateY(0px)' : 'translateY(30px)',
+                                transition: 'opacity 0.7s 0.4s cubic-bezier(0.4,0,0.2,1), transform 0.7s 0.4s cubic-bezier(0.4,0,0.2,1)'
+                            }}
+                        >
+                            <h3 style={{ color: '#166534', fontWeight: 600, fontSize: 18, marginBottom: 16, textAlign: 'center' }}>
+                                <i className="fa-solid fa-chart-bar" style={{ marginRight: 8 }}></i>
+                                Contact Form Statistics
+                            </h3>
+                            
+                            <div style={{ display: 'flex', justifyContent: 'space-around', alignItems: 'center', flexWrap: 'wrap', gap: 16 }}>
+                                <div style={{ textAlign: 'center' }}>
+                                    <div style={{ fontSize: '2rem', fontWeight: 'bold', color: '#16a34a' }}>
+                                        {submissions.totalSubmissions}
+                                    </div>
+                                    <div style={{ fontSize: '0.9rem', color: '#666' }}>Total Submissions</div>
+                                </div>
+                                
+                                <div style={{ textAlign: 'center' }}>
+                                    <div style={{ fontSize: '1.2rem', fontWeight: '600', color: '#166534' }}>
+                                        {submissions.lastUpdated ? new Date(submissions.lastUpdated).toLocaleDateString() : 'No submissions yet'}
+                                    </div>
+                                    <div style={{ fontSize: '0.9rem', color: '#666' }}>Last Updated</div>
+                                </div>
+                                
+                                <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap', justifyContent: 'center' }}>
+                                    <button
+                                        onClick={() => {
+                                            if (exportSubmissionsAsJSON()) {
+                                                alert('تم تصدير البيانات بنجاح! ✅');
+                                                // Refresh the data after export
+                                                setSubmissions(getAllContactSubmissions());
+                                            } else {
+                                                alert('عذراً، حدث خطأ في تصدير البيانات.');
+                                            }
+                                        }}
+                                        style={{
+                                            background: '#16a34a',
+                                            color: 'white',
+                                            border: 'none',
+                                            borderRadius: '8px',
+                                            padding: '10px 20px',
+                                            fontSize: '0.9rem',
+                                            fontWeight: '600',
+                                            cursor: 'pointer',
+                                            transition: 'background 0.2s'
+                                        }}
+                                        onMouseEnter={(e) => e.target.style.background = '#15803d'}
+                                        onMouseLeave={(e) => e.target.style.background = '#16a34a'}
+                                    >
+                                        <i className="fa-solid fa-download" style={{ marginRight: 6 }}></i>
+                                        Export as JSON
+                                    </button>
+                                    
+                                    <button
+                                        onClick={async () => {
+                                            try {
+                                                const result = await exportAllToGoogleSheets();
+                                                if (result.success) {
+                                                    alert('تم إرسال البيانات إلى Google Sheets بنجاح! ✅');
+                                                } else {
+                                                    alert('عذراً، حدث خطأ في إرسال البيانات إلى Google Sheets.');
+                                                }
+                                            } catch (error) {
+                                                alert('عذراً، حدث خطأ في إرسال البيانات إلى Google Sheets.');
+                                            }
+                                        }}
+                                        style={{
+                                            background: '#4285f4',
+                                            color: 'white',
+                                            border: 'none',
+                                            borderRadius: '8px',
+                                            padding: '10px 20px',
+                                            fontSize: '0.9rem',
+                                            fontWeight: '600',
+                                            cursor: 'pointer',
+                                            transition: 'background 0.2s'
+                                        }}
+                                        onMouseEnter={(e) => e.target.style.background = '#3367d6'}
+                                        onMouseLeave={(e) => e.target.style.background = '#4285f4'}
+                                    >
+                                        <i className="fa-solid fa-table" style={{ marginRight: 6 }}></i>
+                                        Send to Google Sheets
+                                    </button>
+                                </div>
+                            </div>
+                        </div> */}
+
+
                     </div>
                 </div>
+                {/* Hidden iframe for form submission */}
+                <iframe name="hidden_iframe" id="hidden_iframe" style={{ display: 'none' }}></iframe>
                 {/* No <style> block needed, animation is now handled by JS/React */}
                 {/* <ContactForm /> */}
             </section>
