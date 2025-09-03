@@ -37,6 +37,7 @@ BOHO Furniture is a full-stack e-commerce platform focused on unique, handcrafte
 
 ---
 
+
 ## Live Demo
 
 > https://boho-furniture.vercel.app/
