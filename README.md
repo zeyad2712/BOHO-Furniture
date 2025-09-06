@@ -1,241 +1,394 @@
 
-# BOHO Furniture
+# 🪑 BOHO Furniture
 
-BOHO Furniture is a modern, feature-rich e-commerce website for boho furniture, built with React and Vite. It offers a beautiful, responsive UI, advanced product browsing, cart management, and more.
+A modern, feature-rich e-commerce website for handcrafted bohemian furniture, built with React and Vite. Experience beautiful, responsive design with advanced product browsing, cart management, and seamless user interactions.
 
----
-
-## Table of Contents
-
-- [Project Overview](#project-overview)
-- [Live Demo](#live-demo)
-- [Features](#features)
-- [Getting Started](#getting-started)
-- [Technologies Used](#technologies-used)
-- [Project Structure](#project-structure)
-- [Main Components](#main-components)
-- [Context & State Management](#context--state-management)
-- [Pages](#pages)
-- [Utilities](#utilities)
-- [Configuration](#configuration)
-- [Contributing](#contributing)
-- [License](#license)
+[![React](https://img.shields.io/badge/React-19.1.0-blue.svg)](https://reactjs.org/)
+[![Vite](https://img.shields.io/badge/Vite-7.0.4-646CFF.svg)](https://vitejs.dev/)
+[![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
 ---
 
-## Project Overview
+## 📋 Table of Contents
 
-BOHO Furniture is a full-stack e-commerce platform focused on unique, handcrafted bohemian furniture. It features:
-
-- Modern, responsive design
-- Product catalog with filtering, sorting, and search
-- Product details with reviews, shipping, and returns info
-- Cart and wishlist management
-- Dark mode toggle
-- Google Sheets integration for contact submissions
-- Accessibility and smooth animations
-
----
-
-
-## Live Demo
-
-> https://boho-furniture.vercel.app/
+- [Project Overview](#-project-overview)
+- [Live Demo](#-live-demo)
+- [Key Features](#-key-features)
+- [Getting Started](#-getting-started)
+- [Technologies Used](#-technologies-used)
+- [Project Structure](#-project-structure)
+- [Components Overview](#-components-overview)
+- [Data Management](#-data-management)
+- [Google Sheets Integration](#-google-sheets-integration)
+- [Development Scripts](#-development-scripts)
+- [Contributing](#-contributing)
+- [License](#-license)
 
 ---
 
-## Features
+## 🎯 Project Overview
 
-### ProductCard Component
+BOHO Furniture is a comprehensive e-commerce platform specializing in unique, handcrafted bohemian furniture. The application showcases a modern, responsive design with advanced features including:
 
-The ProductCard component is a beautifully designed, modern product card with the following features:
+- **E-commerce Functionality**: Complete product catalog with filtering, sorting, and search
+- **Shopping Cart**: Persistent cart management with localStorage
+- **Product Management**: Detailed product pages with multiple views and specifications
+- **Contact Integration**: Form submissions with Google Sheets integration
+- **Dark Mode**: Toggle between light and dark themes
+- **Responsive Design**: Mobile-first approach with smooth animations
+- **Accessibility**: ARIA labels, keyboard navigation, and color contrast compliance
 
-- **Responsive Design**: Adapts to different screen sizes with a clean grid layout
-- **Hover Effects**: Smooth animations and transitions on hover
-- **Rating System**: Visual star rating with half-star support
-- **Price Display**: Shows current price and original price with discount calculation
-- **Wishlist Functionality**: Heart icon to add/remove items from wishlist
-- **Quick View**: Overlay with quick view button on hover
-- **Stock Status**: Visual indicators for in-stock/out-of-stock items
-- **Discount Badges**: Automatic calculation and display of discount percentages
-- **Add to Cart**: Prominent call-to-action button with disabled state for out-of-stock items
-- **Image Handling**: Fallback images for broken product images
-- **Accessibility**: Proper ARIA labels and keyboard navigation support
+---
 
-#### Usage
+## 🌐 Live Demo
 
-```jsx
-import ProductCard from './components/ProductCard';
+> **Live Demo**: [https://boho-furniture.vercel.app/](https://boho-furniture.vercel.app/)
 
-const product = {
+Experience the full functionality of the BOHO Furniture website with all features enabled.
+
+---
+
+## ✨ Key Features
+
+### 🛍️ E-commerce Core Features
+
+- **Product Catalog**: Browse 12+ handcrafted furniture pieces across multiple categories
+- **Advanced Filtering**: Filter by category, price range, rating, and availability
+- **Search Functionality**: Real-time product search with instant results
+- **Product Details**: Comprehensive product pages with multiple images, specifications, and reviews
+- **Shopping Cart**: Add, remove, update quantities, and persistent cart storage
+- **Wishlist**: Save favorite products for later purchase
+
+### 🎨 User Interface & Experience
+
+- **Responsive Design**: Optimized for desktop, tablet, and mobile devices
+- **Dark Mode Toggle**: Seamless switching between light and dark themes
+- **Smooth Animations**: Fade, slide, scale, and count-up animations
+- **Interactive Elements**: Hover effects, loading states, and micro-interactions
+- **Accessibility**: WCAG compliant with proper ARIA labels and keyboard navigation
+
+### 📱 Pages & Navigation
+
+- **Home Page**: Hero section, services, categories, new arrivals, best sellers, reviews
+- **Products Page**: Filterable product grid with sorting options
+- **Product Details**: Detailed product information with tabs for description, reviews, shipping
+- **About Page**: Brand story, values, and company information
+- **Legal Pages**: Terms, shipping, refund, and privacy policies
+
+### 🔧 Technical Features
+
+- **State Management**: React Context for cart and application state
+- **Data Persistence**: localStorage for cart and contact form submissions
+- **Google Sheets Integration**: Automatic contact form data export
+- **Performance Optimized**: Lazy loading, image optimization, and efficient rendering
+- **SEO Ready**: Meta tags, semantic HTML, and structured data
+
+---
+
+## 🚀 Getting Started
+
+### Prerequisites
+
+- Node.js (version 16 or higher)
+- npm or yarn package manager
+
+### Installation
+
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/zeyad2712/BOHO-Furniture.git
+   cd BOHO-Furniture
+   ```
+
+2. **Install dependencies**
+   ```bash
+   npm install
+   ```
+
+3. **Start the development server**
+   ```bash
+   npm run dev
+   ```
+
+4. **Open your browser**
+   Navigate to [http://localhost:5173](http://localhost:5173)
+
+### Build for Production
+
+```bash
+npm run build
+```
+
+### Preview Production Build
+
+```bash
+npm run preview
+```
+
+---
+
+## 🛠️ Technologies Used
+
+### Core Technologies
+- **React 19.1.0** - Modern React with latest features
+- **Vite 7.0.4** - Fast build tool and development server
+- **React Router DOM 7.8.2** - Client-side routing
+
+### Styling & UI
+- **Tailwind CSS** - Utility-first CSS framework (via CDN)
+- **Bootstrap** - Component library (via CDN)
+- **Custom CSS** - Inline styles and animations
+
+### Additional Libraries
+- **@emailjs/browser 4.4.1** - Email service integration
+- **@splidejs/react-splide 0.7.12** - Carousel/slider component
+- **React Icons** - Icon library
+
+### Development Tools
+- **ESLint** - Code linting and formatting
+- **Vite Plugin React** - React support for Vite
+
+---
+
+## 📁 Project Structure
+
+```
+BOHO-Furniture/
+├── public/
+│   └── vite.svg
+├── src/
+│   ├── components/
+│   │   ├── AboutUs.jsx           # About us section
+│   │   ├── BestSelling.jsx       # Best selling products
+│   │   ├── CategorisSection.jsx  # Product categories
+│   │   ├── ContactUs.jsx         # Contact form with Google Sheets
+│   │   ├── DarkModeToggoler.jsx  # Dark mode toggle
+│   │   ├── Footer.jsx            # Site footer
+│   │   ├── Hero.jsx              # Hero section with animations
+│   │   ├── Navbar.jsx            # Navigation bar
+│   │   ├── NewArrivals.jsx       # New arrivals section
+│   │   ├── ProductCard.jsx       # Individual product card
+│   │   ├── Reviews.jsx           # Customer reviews
+│   │   ├── ScrollToTop.jsx       # Scroll to top button
+│   │   └── ServicesSection.jsx   # Services showcase
+│   ├── context/
+│   │   └── CartContext.jsx       # Cart state management
+│   ├── data/
+│   │   ├── ProductsData.js       # Product data and utilities
+│   │   └── contactSubmissions.json # Contact form data
+│   ├── pages/
+│   │   ├── About.jsx             # About page
+│   │   ├── Home.jsx              # Home page
+│   │   ├── Privacy.jsx           # Privacy policy
+│   │   ├── ProductDetails.jsx    # Product details page
+│   │   ├── Products.jsx          # Products catalog
+│   │   ├── Refund.jsx            # Refund policy
+│   │   ├── Shipping.jsx          # Shipping information
+│   │   └── Terms.jsx             # Terms and conditions
+│   ├── utils/
+│   │   ├── contactStorage.js     # Local storage utilities
+│   │   └── googleSheetsIntegration.js # Google Sheets API
+│   ├── assets/
+│   │   └── images/               # Static images
+│   ├── App.jsx                   # Main app component
+│   ├── App.css                   # Global styles
+│   ├── index.css                 # Base styles
+│   └── main.jsx                  # Application entry point
+├── google-apps-script.js         # Google Apps Script for Sheets
+├── GOOGLE_SHEETS_SETUP.md        # Google Sheets setup guide
+├── package.json                  # Dependencies and scripts
+├── vite.config.js               # Vite configuration
+├── eslint.config.js             # ESLint configuration
+└── README.md                    # Project documentation
+```
+
+---
+
+## 🧩 Components Overview
+
+### Core Components
+
+#### 🛒 ProductCard
+Modern, responsive product card with:
+- Hover effects and animations
+- Star rating system with half-star support
+- Price display with discount calculation
+- Wishlist functionality
+- Stock status indicators
+- Add to cart functionality
+- Image fallback handling
+
+#### 🏠 Hero Section
+Eye-catching landing section featuring:
+- Animated statistics counters
+- Gradient text effects
+- Floating decorative elements
+- Responsive image gallery
+- Call-to-action buttons
+- Scroll indicators
+
+#### 🛍️ Cart Management
+Complete shopping cart system:
+- Add/remove products
+- Quantity updates
+- Persistent storage
+- Total calculations
+- Cart item count display
+
+### Page Components
+
+#### 🏡 Home Page
+Comprehensive landing page with:
+- Hero section with animations
+- Services showcase
+- Product categories
+- New arrivals carousel
+- Best selling products
+- Customer reviews
+- About us section
+- Contact form
+
+#### 📦 Products Page
+Advanced product catalog featuring:
+- Filterable product grid
+- Category filtering
+- Price range filtering
+- Rating filtering
+- Search functionality
+- Sorting options
+- Animated grid layout
+
+#### 🔍 Product Details
+Detailed product information with:
+- Multiple product images
+- Color and size selection
+- Quantity controls
+- Add to cart/wishlist
+- Product specifications
+- Customer reviews
+- Shipping information
+- Related products
+
+---
+
+## 💾 Data Management
+
+### Product Data Structure
+
+Products are defined with comprehensive information:
+
+```javascript
+{
   id: 1,
   name: "Boho Macrame Hanging Chair",
   category: "Chairs",
   price: 299.99,
   originalPrice: 399.99,
-  image: "/path/to/image.jpg",
+  image: "/images/products/macrame-chair.jpg",
+  imageView1: "/images/products/macrame-chair-1.jpg",
+  imageView2: "/images/products/macrame-chair-2.jpg",
+  imageView3: "/images/products/macrame-chair-3.jpg",
+  description: "Handcrafted macrame hanging chair...",
   rating: 4.8,
   reviews: 127,
-  inStock: true
-};
-
-<ProductCard product={product} />
+  inStock: true,
+  features: ["Handcrafted", "Natural materials", "Weight capacity: 300 lbs"],
+  colors: ["Natural", "Beige", "White"],
+  dimensions: "32\" W x 32\" D x 40\" H"
+}
 ```
 
-### Other Features
+### Data Utilities
 
-- **Home Page**: Hero section, services, categories, new arrivals, best selling, reviews, about us, contact
-- **Products Page**: Filter by category, price, rating, search, sort, animated grid
-- **Product Details**: Multiple images, color selection, quantity, add to cart, wishlist, tabs for description, reviews, shipping, returns
-- **Cart**: Add, remove, update quantity, clear cart, persistent via localStorage
-- **Dark Mode**: Toggle between light and dark themes
-- **Contact Form**: Submissions saved locally and optionally sent to Google Sheets
-- **Footer**: Social links, quick navigation, legal info
-- **Accessibility**: ARIA labels, keyboard navigation, color contrast
-- **Animations**: Fade, slide, scale, number count, staggered grid
+- **Product Filtering**: Filter by category, price, rating, availability
+- **Search Functionality**: Real-time product search
+- **Featured Products**: Highlight high-rated items
+- **On-Sale Products**: Identify discounted items
 
 ---
 
-## Getting Started
+## 📊 Google Sheets Integration
 
+### Setup Process
 
-1. **Clone the repository**
-  ```sh
-  git clone https://github.com/zeyad2712/BOHO-Furniture.git
-  cd BOHO-Furniture
-  ```
-2. **Install dependencies**
-  ```sh
-  npm install
-  ```
-3. **Start the development server**
-  ```sh
-  npm run dev
-  ```
-4. **Open** [http://localhost:5173](http://localhost:5173) in your browser
+1. **Create Google Apps Script** using the provided `google-apps-script.js`
+2. **Deploy as Web App** with public access
+3. **Update Configuration** in `googleSheetsIntegration.js`
+4. **Test Integration** using the contact form
 
----
+### Features
 
-## Technologies Used
+- **Automatic Export**: Contact form submissions sent to Google Sheets
+- **Manual Export**: Export all existing submissions
+- **Data Backup**: Local storage as fallback
+- **Error Handling**: Graceful failure with user feedback
 
-- React 19
-- Vite
-- React Router DOM
-- Tailwind CSS (via CDN)
-- React Icons
-- Bootstrap (via CDN)
+### Data Structure
+
+Contact submissions include:
+- Unique ID
+- Timestamp
+- Name and contact information
+- Message content
+- Export status
 
 ---
 
-## Project Structure
+## 🚀 Development Scripts
 
-```
-src/
-├── components/
-│   ├── ProductCard.jsx      # Main product card component
-│   ├── BestSelling.jsx      # Showcase component using ProductCard
-│   ├── Navbar.jsx
-│   ├── Hero.jsx
-│   ├── DarkModeToggoler.jsx
-│   ├── Footer.jsx
-│   ├── Reviews.jsx
-│   ├── ContactUs.jsx
-│   ├── AboutUs.jsx
-│   ├── NewArrivals.jsx
-│   ├── ServicesSection.jsx
-│   ├── CategorisSection.jsx
-│   ├── ScrollToTop.jsx
-│   └── ...
-├── pages/
-│   ├── Home.jsx             # Home page component
-│   ├── Products.jsx         # Products page component
-│   ├── ProductDetails.jsx   # Product details page
-│   ├── About.jsx            # About page
-│   ├── Terms.jsx            # Terms and conditions
-│   ├── Shipping.jsx         # Shipping info
-│   ├── Refund.jsx           # Refund policy
-│   ├── Privacy.jsx          # Privacy policy
-│   └── ...
-├── context/
-│   └── CartContext.jsx      # Cart state management
-├── data/
-│   ├── ProductsData.js      # Product data and utilities
-│   └── contactSubmissions.json # Contact form submissions
-├── utils/
-│   ├── contactStorage.js    # Local contact form storage
-│   └── googleSheetsIntegration.js # Google Sheets API integration
-├── assets/
-│   └── images/              # Product and hero images
-└── ...
+```bash
+# Development
+npm run dev          # Start development server
+npm run build        # Build for production
+npm run preview      # Preview production build
+npm run lint         # Run ESLint
+
+# Available at:
+# http://localhost:5173 (development)
+# http://localhost:4173 (preview)
 ```
 
 ---
 
-## Main Components
+## 🤝 Contributing
 
-- **Navbar**: Top navigation bar with links, dropdowns, and dark mode toggle
-- **Hero**: Eye-catching intro section on the home page
-- **ServicesSection**: Highlights store services
-- **CategorisSection**: Displays product categories
-- **NewArrivals**: Shows latest products
-- **BestSelling**: Highlights popular products
-- **ProductCard**: Individual product display with actions
-- **Reviews**: Customer testimonials
-- **AboutUs**: Brand story and values
-- **ContactUs**: Contact form, Google Sheets integration
-- **Footer**: Social links, navigation, legal info
-- **ScrollToTop**: Button to scroll to top
-- **DarkModeToggoler**: Switch between light/dark themes
+We welcome contributions! Here's how you can help:
 
----
+1. **Fork the repository**
+2. **Create a feature branch**: `git checkout -b feature/amazing-feature`
+3. **Commit your changes**: `git commit -m 'Add amazing feature'`
+4. **Push to the branch**: `git push origin feature/amazing-feature`
+5. **Open a Pull Request**
 
-## Context & State Management
+### Development Guidelines
 
-- **CartContext**: Provides cart state and actions (`addToCart`, `removeFromCart`, `updateQuantity`, `clearCart`, `getCartTotal`, `getCartItemsCount`). Cart is persisted in localStorage.
-- **useCart**: Custom hook to access cart context
+- Follow the existing code style
+- Add comments for complex logic
+- Test your changes thoroughly
+- Update documentation as needed
 
 ---
 
-## Data
+## 📄 License
 
-- **ProductsData.js**: Contains product objects with fields like `id`, `name`, `category`, `price`, `originalPrice`, `image`, `rating`, `reviews`, `inStock`, `features`, `dimensions`, `colors`, `description`.
-- **contactSubmissions.json**: Stores contact form submissions locally
-
----
-
-## Pages
-
-- **Home.jsx**: Main landing page, imports all showcase components
-- **Products.jsx**: Product catalog with filters, sorting, search, animated grid
-- **ProductDetails.jsx**: Detailed product info, tabs for description, reviews, shipping, returns, add to cart, wishlist
-- **About.jsx**: Brand story, values, team, statistics, CTA
-- **Terms.jsx**: Terms and conditions
-- **Shipping.jsx**: Shipping information
-- **Refund.jsx**: Refund policy
-- **Privacy.jsx**: Privacy policy
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ---
 
-## Utilities
+## 🙏 Acknowledgments
 
-- **contactStorage.js**: Handles saving contact form submissions locally
-- **googleSheetsIntegration.js**: Sends contact form data to Google Sheets via Apps Script
-
----
-
-## Configuration
-
-- **vite.config.js**: Vite configuration
-- **eslint.config.js**: ESLint rules
+- **React Team** for the amazing framework
+- **Vite Team** for the fast build tool
+- **Tailwind CSS** for the utility-first CSS framework
+- **Unsplash** for beautiful product images
+- **All Contributors** who help improve this project
 
 ---
 
-## Contributing
+<div align="center">
 
-Contributions are welcome! Please open issues or submit pull requests for improvements, bug fixes, or new features.
+**Made with ❤️ by the BOHO Furniture Team**
 
----
+[⭐ Star this repo](https://github.com/zeyad2712/BOHO-Furniture) | [🐛 Report Bug](https://github.com/zeyad2712/BOHO-Furniture/issues) | [💡 Request Feature](https://github.com/zeyad2712/BOHO-Furniture/issues)
 
-## License
-
-This project is licensed under the MIT License. See [LICENSE](LICENSE) for details.
+</div>

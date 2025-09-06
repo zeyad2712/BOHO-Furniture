@@ -137,7 +137,6 @@ function ContactUs() {
                         </div>
                         {/* Contact Form */}
                         <form
-                        
                             className="contact-form"
                             style={{
                                 flex: '2 1 340px',
@@ -219,7 +218,7 @@ function ContactUs() {
                                 ></textarea>
                             </div>
 
-                            <input
+                            <button
                                 type="submit"
                                 className="btn bg-green-600 hover:bg-green-700 text-white font-bold flex items-center justify-center gap-2"
                                 style={{
@@ -232,8 +231,13 @@ function ContactUs() {
                                     boxShadow: '0 2px 8px rgba(34,197,94,0.10)',
                                     cursor: 'pointer',
                                 }}
-                                value="Send Message"
-                            />
+                                onClick={() => {
+                                    console.log('Send Message');
+                                    alert('Message Sent');
+                                }}
+                            >
+                                <i className="fa-solid fa-paper-plane"></i>Send Message
+                            </button>
 
                         </form>
 
