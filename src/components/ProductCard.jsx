@@ -62,50 +62,87 @@ const ProductCard = ({ product }) => {
     };
 
     return (
-        <div className="card h-100 shadow-sm position-relative border-none"
-            style={{ transform: 'scale(1)', transition: 'transform 0.3s cubic-bezier(0.4,0,0.2,1)', borderRadius: '10px' }}
-            onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.05)'}
-            onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
+        <div
+            className="card h-100 shadow-lg position-relative border-0"
+            style={{
+                transform: 'scale(1)',
+                transition: 'transform 0.25s cubic-bezier(0.4,0,0.2,1), box-shadow 0.25s',
+                borderRadius: '18px',
+                background: 'linear-gradient(135deg, #f0fdf4 0%, #fff 100%)',
+                boxShadow: '0 6px 32px rgba(34,197,94,0.10), 0 1.5px 6px rgba(0,0,0,0.04)'
+            }}
+            onMouseEnter={e => {
+                e.currentTarget.style.transform = 'scale(1.035)';
+                e.currentTarget.style.boxShadow = '0 12px 40px rgba(34,197,94,0.18), 0 2px 8px rgba(0,0,0,0.06)';
+            }}
+            onMouseLeave={e => {
+                e.currentTarget.style.transform = 'scale(1)';
+                e.currentTarget.style.boxShadow = '0 6px 32px rgba(34,197,94,0.10), 0 1.5px 6px rgba(0,0,0,0.04)';
+            }}
         >
             {/* Image Container - Clickable for navigation */}
             <Link to={`/product/${id}`} className="text-decoration-none">
-                <div className="position-relative">
+                <div className="position-relative" style={{ borderRadius: '18px 18px 0 0', overflow: 'hidden' }}>
                     <img
                         src={image}
                         alt={name}
                         className="card-img-top"
-                        style={{ height: '13rem', objectFit: 'cover', filter: 'brightness(0.6)', transition: 'filter 0.5s cubic-bezier(0.4,0,0.2,1)', border: 'none !important', borderRadius: '10px 10px 0 0' }}
-                        // onError={(e) => {
-                        //     e.target.src = 'https://via.placeholder.com/300x200/f5f5f5/999999?text=Product+Image';
-                        // }}
-                        onMouseEnter={(e) => e.currentTarget.style.filter = 'brightness(1.03)'}
-                        onMouseLeave={(e) => e.currentTarget.style.filter = 'brightness(0.6)'}
+                        style={{
+                            height: '14rem',
+                            objectFit: 'cover',
+                            filter: 'brightness(0.82) saturate(1.08)',
+                            transition: 'filter 0.4s cubic-bezier(0.4,0,0.2,1), transform 0.4s',
+                            border: 'none',
+                            borderRadius: '18px 18px 0 0',
+                            boxShadow: '0 2px 12px rgba(34,197,94,0.08)'
+                        }}
+                        onMouseEnter={e => {
+                            e.currentTarget.style.filter = 'brightness(1.04) saturate(1.12)';
+                            e.currentTarget.style.transform = 'scale(1.03)';
+                        }}
+                        onMouseLeave={e => {
+                            e.currentTarget.style.filter = 'brightness(0.82) saturate(1.08)';
+                            e.currentTarget.style.transform = 'scale(1)';
+                        }}
                     />
 
                     {/* Discount Badge */}
                     {hasDiscount && (
-                        <span className="badge bg-danger position-absolute top-0 start-0 m-2 fs-6">
+                        <span
+                            className="badge position-absolute top-0 start-0 m-2 fs-6"
+                            style={{
+                                background: 'linear-gradient(90deg, #dc2626 0%, #f87171 100%)',
+                                color: '#fff',
+                                fontWeight: 700,
+                                borderRadius: '8px',
+                                boxShadow: '0 2px 8px rgba(220,38,38,0.12)'
+                            }}
+                        >
                             -{discountPercentage}%
                         </span>
                     )}
-
-                    {/* Wishlist Button */}
-                    {/* <button
-                        type="button"
-                        onClick={() => setIsWishlisted(!isWishlisted)}
-                        className={`btn btn-sm rounded-circle position-absolute top-0 end-0 m-2 ${isWishlisted
-                            ? 'btn-danger text-white'
-                            : 'btn-light text-secondary'
-                            }`}
-                        style={{ zIndex: 2 }}
-                    >
-                        <span className="fs-5">{isWishlisted ? '❤️' : '🤍'}</span>
-                    </button> */}
+                    
 
                     {/* Out of Stock Overlay */}
                     {!inStock && (
-                        <div className="position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center" style={{ background: 'rgba(0,0,0,0.3)', zIndex: 3 }}>
-                            <span className="badge bg-dark fs-6 py-2 px-3 rounded-pill">
+                        <div
+                            className="position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center"
+                            style={{
+                                background: 'rgba(0,0,0,0.32)',
+                                zIndex: 3,
+                                borderRadius: '18px 18px 0 0'
+                            }}
+                        >
+                            <span
+                                className="badge fs-6 py-2 px-3 rounded-pill"
+                                style={{
+                                    background: 'linear-gradient(90deg, #222 0%, #444 100%)',
+                                    color: '#fff',
+                                    fontWeight: 600,
+                                    fontSize: '1.01rem',
+                                    letterSpacing: '0.01em'
+                                }}
+                            >
                                 Out of Stock
                             </span>
                         </div>
@@ -115,30 +152,61 @@ const ProductCard = ({ product }) => {
 
             {/* Product Info - Clickable for navigation */}
             <Link to={`/product/${id}`} className="text-decoration-none">
-                <div className="card-body d-flex flex-column">
+                <div className="card-body d-flex flex-column px-4 py-3" style={{ background: 'transparent', borderRadius: '0 0 18px 18px' }}>
                     {/* Category */}
-                    <div className="text-uppercase text-secondary small fw-semibold mb-2">
+                    <div
+                        className="text-uppercase small fw-semibold mb-2"
+                        style={{
+                            color: '#16a34a',
+                            letterSpacing: '0.08em',
+                            fontWeight: 700,
+                            fontSize: '0.85rem'
+                        }}
+                    >
                         {category}
                     </div>
 
                     {/* Product Name */}
-                    <h5 className="card-title fw-semibold mb-0" style={{ minHeight: '2.5em', lineHeight: '1.25em', overflow: 'hidden' }}>
+                    <h5
+                        className="card-title fw-bold mb-1"
+                        style={{
+                            minHeight: '2.5em',
+                            lineHeight: '1.25em',
+                            overflow: 'hidden',
+                            color: '#22292f',
+                            fontSize: '1.18rem',
+                            letterSpacing: '-0.01em'
+                        }}
+                    >
                         {name}
                     </h5>
 
                     {/* Rating */}
                     <div className="d-flex align-items-center gap-2 mb-2">
                         <StarRating rating={rating} />
-                        <span className="small text-muted">({reviews})</span>
+                        <span className="small text-muted" style={{ fontWeight: 500, fontSize: '0.97em' }}>({reviews})</span>
                     </div>
 
                     {/* Price */}
-                    <div className="mb-3">
-                        <span className="fs-5 fw-bold text-dark me-2">
+                    <div className="mb-3 d-flex align-items-end gap-2">
+                        <span
+                            className="fs-5 fw-bold"
+                            style={{
+                                color: '#16a34a',
+                                fontSize: '1.22rem',
+                                letterSpacing: '-0.01em'
+                            }}
+                        >
                             ${price.toFixed(2)}
                         </span>
                         {hasDiscount && (
-                            <span className="text-muted text-decoration-line-through">
+                            <span
+                                className="text-muted text-decoration-line-through"
+                                style={{
+                                    fontSize: '1.01rem',
+                                    color: '#b0b0b0'
+                                }}
+                            >
                                 ${originalPrice.toFixed(2)}
                             </span>
                         )}
@@ -147,31 +215,45 @@ const ProductCard = ({ product }) => {
             </Link>
 
             {/* Add to Cart Button - Separate from navigation */}
-            <div className="px-3 pb-3">
+            <div className="px-4 pb-4">
                 <button
                     type="button"
                     disabled={!inStock}
                     onClick={handleAddToCart}
-                    className={`btn mt-auto w-100 py-2 ${inStock
-                        ? 'btn-dark'
-                        : 'btn-secondary disabled'
-                        }`}
+                    className={`btn mt-auto w-100 py-2 shadow-sm ${inStock ? '' : 'btn-secondary disabled'}`}
                     style={{
-                        background: '#16a34a',
-                        transition: 'scale 0.3s cubic-bezier(0.4,0,0.2,1)',
+                        background: inStock
+                            ? '#16a34a'
+                            : '#cbd5e1',
+                        color: inStock ? '#fff' : '#64748b',
+                        fontWeight: 700,
                         border: 'none',
-                        borderRadius: '10px',
-                        fontSize: '17px',
-                        fontWeight: '700',
+                        borderRadius: '9px',
+                        fontSize: '1.08rem',
+                        letterSpacing: '0.01em',
+                        boxShadow: inStock
+                            ? '0 2px 8px rgba(34,197,94,0.10)'
+                            : '0 1px 4px rgba(0,0,0,0.06)',
+                        transition: 'background 0.2s, color 0.2s, scale 0.2s'
                     }}
                     onMouseEnter={e => {
-                        e.currentTarget.style.scale = '1.02';
+                        if (inStock) e.currentTarget.style.scale = '1.03';
                     }}
                     onMouseLeave={e => {
-                        e.currentTarget.style.scale = '1';
+                        if (inStock) e.currentTarget.style.scale = '1';
                     }}
                 >
-                    {inStock ? 'Add to Cart' : 'Out of Stock'}
+                    {inStock ? (
+                        <>
+                            <i className="fa-solid fa-cart-plus me-2" style={{ color: "#fef08a" }}></i>
+                            Add to Cart
+                        </>
+                    ) : (
+                        <>
+                            <i className="fa-solid fa-ban me-2"></i>
+                            Out of Stock
+                        </>
+                    )}
                 </button>
             </div>
         </div>

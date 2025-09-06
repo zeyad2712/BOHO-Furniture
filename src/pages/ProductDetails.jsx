@@ -52,7 +52,7 @@ const ProductDetails = () => {
         if (product && product.inStock) {
             // Add the product to cart with the selected quantity
             addToCart(product, quantity);
-            
+
             // Show success message
             const button = document.querySelector('.add-to-cart-btn');
             if (button) {
@@ -417,12 +417,20 @@ const ProductDetails = () => {
                         <h2 className="text-xl font-bold text-gray-800 mb-6">Related Products</h2>
                         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                             {relatedProducts.map((relatedProduct) => (
+                                // the Related Product Card
                                 <div
                                     key={relatedProduct.id}
                                     onClick={() => navigate(`/product/${relatedProduct.id}`)}
+                                    onMouseEnter={(e) => {
+                                        e.currentTarget.style.scale = 1.05;
+                                    }}
+                                    onMouseLeave={(e) => {
+                                        e.currentTarget.style.scale = 1;
+                                    }}
+                                    style={{ transition: 'all 0.3s ease-in-out' }}
                                     className="bg-white rounded-lg shadow-md overflow-hidden cursor-pointer hover:shadow-lg transition-shadow"
                                 >
-                                    <div className="aspect-square min-h-[120px] max-h-[180px] flex items-center justify-center">
+                                    <div className="w-full aspect-square min-h-[120px] max-h-[180px]">
                                         <img
                                             src={relatedProduct.image}
                                             alt={relatedProduct.name}

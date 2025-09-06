@@ -104,7 +104,6 @@ const Navbar = () => {
                                 <Link
                                     className="nav-link active"
                                     to="/"
-                                    href="#"
                                     style={{
                                         color: "#fff",
                                         fontWeight: 600,
@@ -248,14 +247,16 @@ const Navbar = () => {
                                             onMouseLeave={handleMouseLeave}
                                         >
                                             <li>
-                                                <Link className="dropdown-item" to="/products" style={{
-                                                    fontWeight: 500,
-                                                    padding: "8px 16px",
-                                                    color: "#166534",
-                                                    textDecoration: "none",
-                                                    display: "block",
-                                                    transition: "background 0.2s"
-                                                }}
+                                                <Link className="dropdown-item"
+                                                    to="/products"
+                                                    style={{
+                                                        fontWeight: 500,
+                                                        padding: "8px 16px",
+                                                        color: "#166534",
+                                                        textDecoration: "none",
+                                                        display: "block",
+                                                        transition: "background 0.2s"
+                                                    }}
                                                     onMouseOver={e => {
                                                         e.currentTarget.style.background = "#f0fdf4";
                                                     }}
@@ -268,14 +269,16 @@ const Navbar = () => {
                                                 </Link>
                                             </li>
                                             <li>
-                                                <a className="dropdown-item" href="#new-arrivals" style={{
-                                                    fontWeight: 500,
-                                                    padding: "8px 16px",
-                                                    color: "#166534",
-                                                    textDecoration: "none",
-                                                    display: "block",
-                                                    transition: "background 0.2s"
-                                                }}
+                                                <Link className="dropdown-item"
+                                                    to="/#new-arrivals"
+                                                    style={{
+                                                        fontWeight: 500,
+                                                        padding: "8px 16px",
+                                                        color: "#166534",
+                                                        textDecoration: "none",
+                                                        display: "block",
+                                                        transition: "background 0.2s"
+                                                    }}
                                                     onMouseOver={e => {
                                                         e.currentTarget.style.background = "#f0fdf4";
                                                     }}
@@ -292,15 +295,15 @@ const Navbar = () => {
                                                 >
                                                     <i className="fa-solid fa-star" style={{ marginRight: 8 }}></i>
                                                     New Arrivals
-                                                </a>
+                                                </Link>
                                             </li>
                                             <li>
                                                 <hr style={{ margin: "4px 0", borderColor: "rgba(34,197,94,0.1)" }} />
                                             </li>
                                             <li>
-                                                <a
+                                                <Link
                                                     className="dropdown-item"
-                                                    href="#best-selling"
+                                                    to="/#best-selling"
                                                     style={{
                                                         fontWeight: 500,
                                                         padding: "8px 16px",
@@ -328,7 +331,7 @@ const Navbar = () => {
                                                 >
                                                     <i className="fa-solid fa-fire" style={{ marginRight: 8 }}></i>
                                                     Best Selling
-                                                </a>
+                                                </Link>
                                             </li>
                                         </ul>
                                     </li>
@@ -690,7 +693,7 @@ const Navbar = () => {
                             borderRadius: "22px",
                             boxShadow: "0 8px 40px rgba(34,197,94,0.18)",
                             border: "none",
-                            background: "linear-gradient(135deg, #f0fdf4 0%, #fff 100%)",
+                            background: "#f8fafc", // soft off-white
                         }}
                     >
                         <div
@@ -699,10 +702,11 @@ const Navbar = () => {
                                 border: "none",
                                 borderTopLeftRadius: 22,
                                 borderTopRightRadius: 22,
-                                background: "linear-gradient(90deg, #22c55e 0%, #22c55e 100%)",
+                                background: "#22c55e", // solid green
                                 color: "#fff",
                                 alignItems: "center",
                                 padding: "1.25rem 1.5rem",
+                                boxShadow: "0 2px 8px rgba(34,197,94,0.10)",
                             }}
                         >
                             <h1
@@ -746,20 +750,19 @@ const Navbar = () => {
                                         style={{
                                             maxWidth: "100%",
                                             borderRadius: "16px",
-                                            background: "linear-gradient(120deg, #bbf7d0 0%, #f0fdf4 100%)",
+                                            background: "#e7f9ef", // soft green background
                                             overflow: "hidden",
                                             boxShadow: "0 2px 12px rgba(34,197,94,0.10)",
                                         }}
                                     >
-                                        <div className="row g-0 align-items-center px-2">
+                                        <div className="row g-0 align-items-center">
                                             <div
                                                 className="col-4 d-flex align-items-center justify-content-center"
                                                 style={{
-                                                    background: "#fff",
+                                                    background: 'transparent',
                                                     borderRadius: "0 15px 15px 0",
                                                     height: "100%",
-                                                    minHeight: 110,
-                                                    padding: "0.5rem",
+                                                    minHeight: 200,
                                                 }}
                                             >
                                                 <img
@@ -770,8 +773,8 @@ const Navbar = () => {
                                                         width: "100%",
                                                         height: "100%",
                                                         objectFit: "cover",
-                                                        borderRadius: "12px 0 0 12px",
-                                                        minHeight: 90,
+                                                        borderRadius: "0 12px 12px 0",
+                                                        minHeight: 200,
                                                         boxShadow: "0 2px 8px rgba(34,197,94,0.08)",
                                                     }}
                                                 />
@@ -942,14 +945,24 @@ const Navbar = () => {
                                                 clearCart();
                                             }
                                         }}
+
+                                        onMouseEnter={(e) => {
+                                            e.currentTarget.style.background = "#dc2626";
+                                            e.currentTarget.style.color = "#fff";
+                                        }}
+                                        onMouseLeave={(e) => {
+                                            e.currentTarget.style.background = "#fff";
+                                            e.currentTarget.style.color = "#dc2626";
+                                        }}
                                     >
                                         <i className="fa fa-trash me-2"></i>Clear
                                     </button>
-                                    <button
+                                    <Link
+                                        // to={/checkout}
                                         type="button"
                                         className="btn"
                                         style={{
-                                            background: "linear-gradient(90deg, #22c55e 0%, #bbf7d0 100%)",
+                                            background: "#22c55e",
                                             color: "#fff",
                                             fontWeight: 700,
                                             border: "none",
@@ -957,14 +970,20 @@ const Navbar = () => {
                                             padding: "0.55rem 1.5rem",
                                             fontSize: "1.01rem",
                                             boxShadow: "0 2px 8px rgba(34,197,94,0.10)",
-                                            transition: "background 0.2s, color 0.2s",
+                                            transition: "all 0.2s, color 0.2s",
                                         }}
-                                        onClick={() => {
-                                            alert("Checkout functionality would be implemented here!");
+                                        // onClick={() => {
+                                        //     alert("Checkout functionality would be implemented here!");
+                                        // }}
+                                        onMouseEnter={(e) => {
+                                            e.currentTarget.style.scale = 1.05;
+                                        }}
+                                        onMouseLeave={(e) => {
+                                            e.currentTarget.style.scale = 1;
                                         }}
                                     >
                                         <i className="fa fa-credit-card me-2"></i>Check Out
-                                    </button>
+                                    </Link>
                                 </div>
                             )}
                         </div>

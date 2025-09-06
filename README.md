@@ -387,7 +387,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 <div align="center">
 
-**Made with ❤️ by the BOHO Furniture Team**
+**Made by Zeyad Waleed**
 
 [⭐ Star this repo](https://github.com/zeyad2712/BOHO-Furniture) | [🐛 Report Bug](https://github.com/zeyad2712/BOHO-Furniture/issues) | [💡 Request Feature](https://github.com/zeyad2712/BOHO-Furniture/issues)
 

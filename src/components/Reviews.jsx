@@ -147,6 +147,7 @@ function Reviews() {
                                             maxWidth: 1100,
                                             margin: "0 auto"
                                         }}
+
                                     >
                                         {(() => {
                                             // Responsive: 1 card on mobile, 5 on desktop
@@ -193,9 +194,15 @@ function Reviews() {
                                                             display: "flex",
                                                             flexDirection: "column",
                                                             alignItems: "center",
-                                                            transition: "box-shadow 0.2s, opacity 0.7s, transform 0.7s",
+                                                            transition: "box-shadow 0.2s, opacity 0.7s, transform 0.7s, scale 0.3s",
                                                             opacity: inView ? 1 : 0,
                                                             transform: inView ? 'translateY(0px)' : 'translateY(40px)',
+                                                        }}
+                                                        onMouseEnter={(e) => {
+                                                            e.currentTarget.style.scale = 1.05;
+                                                        }}
+                                                        onMouseLeave={(e) => {
+                                                            e.currentTarget.style.scale = 1;
                                                         }}
                                                     >
                                                         <div style={{ display: "flex", gap: 2, marginBottom: 10 }}>

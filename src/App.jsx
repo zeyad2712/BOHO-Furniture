@@ -11,6 +11,7 @@ import Shipping from './pages/Shipping'
 import Refund from './pages/Refund'
 import Privacy from './pages/Privacy'
 import Home from './pages/Home'
+import CheckOut from './pages/CheckOut'
 
 // Component to handle automatic scroll to top on route changes
 function ScrollToTop() {
@@ -40,7 +41,8 @@ function App() {
             <Route path="/terms" element={<Terms />} />
             <Route path="/shipping" element={<Shipping />} />
             <Route path="/refund" element={<Refund />} />
-            {/* <Route path="/privacy" element={<Privacy />} /> */}
+            <Route path="/checkout" element={<CheckOut/>}></Route>
+            <Route path="/privacy" element={<Privacy />} />
           </Routes>
           <Footer />
 

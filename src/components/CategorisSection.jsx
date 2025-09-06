@@ -63,7 +63,8 @@ function CategorisSection() {
                                     overflow: 'hidden',
                                     opacity: 0,
                                     transform: 'translateY(30px)',
-                                    animation: `fadeInZoomCat 0.7s ${0.18 + idx * 0.08}s cubic-bezier(0.4,0,0.2,1) forwards`
+                                    animation: `fadeInZoomCat 0.7s ${0.18 + idx * 0.08}s cubic-bezier(0.4,0,0.2,1) forwards`,
+                                    transition: 'all 0.3s ease-in-out'
                                 }}
                                 onMouseEnter={e => {
                                     e.currentTarget.classList.add('cat-hovered');

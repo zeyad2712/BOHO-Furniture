@@ -590,6 +590,9 @@ function Hero() {
             .hero-badge {
                 margin: 0 auto;
             }
+            .scroll-down {
+            display: none !important;
+            }
         }
 
         @media (max-width: 768px) {

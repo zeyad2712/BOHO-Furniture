@@ -5,7 +5,7 @@ export const productsData = [
         category: "Chairs",
         price: 299.99,
         originalPrice: 399.99,
-        image: "/images/products/macrame-chair.jpg",
+        image: "/images/hero-image.jpg",
         imageView1: "/images/products/macrame-chair-1.jpg",
         imageView2: "/images/products/macrame-chair-2.jpg",
         imageView3: "/images/products/macrame-chair-3.jpg",
