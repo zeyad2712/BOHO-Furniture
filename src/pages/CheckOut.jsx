@@ -18,6 +18,7 @@ function CheckOut() {
         cvc: "",
     });
     const [submitted, setSubmitted] = useState(false);
+    const [animateIn, setAnimateIn] = useState(false);
 
     // Redirect if cart is empty
     useEffect(() => {
@@ -25,6 +26,13 @@ function CheckOut() {
             navigate('/products');
         }
     }, [items, navigate, submitted]);
+
+    // Trigger entrance animation on mount
+    useEffect(() => {
+        // Use a timeout to ensure the animation class is added after mount
+        const timeout = setTimeout(() => setAnimateIn(true), 10);
+        return () => clearTimeout(timeout);
+    }, []);
 
     // Calculate subtotal using cart context
     const subtotal = getCartTotal();
@@ -46,7 +54,27 @@ function CheckOut() {
 
     return (
         <div className="min-h-screen py-8 px-4">
-            <div className="max-w-6xl mx-auto">
+            {/* Animation styles */}
+            <style>
+                {`
+                @keyframes fadeSlideIn {
+                    0% {
+                        opacity: 0;
+                        transform: translateY(40px) scale(0.98);
+                    }
+                    100% {
+                        opacity: 1;
+                        transform: translateY(0) scale(1);
+                    }
+                }
+                .checkout-animate-in {
+                    animation: fadeSlideIn 0.6s cubic-bezier(0.4,0,0.2,1) both;
+                }
+                `}
+            </style>
+            <div
+                className={`max-w-6xl mx-auto ${animateIn ? "checkout-animate-in" : ""}`}
+            >
                 <h1 className="text-3xl font-bold text-gray-900 mb-8">Checkout</h1>
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
                     {/* Left Section - Checkout Form */}
@@ -427,10 +455,62 @@ function CheckOut() {
                 {submitted && (
                     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
                         <div className="bg-white rounded-lg p-8 max-w-md mx-4 text-center">
-                            <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                                <svg className="w-8 h-8 text-green-600" fill="currentColor" viewBox="0 0 20 20">
-                                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                            <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4 animate-bounce-in">
+                                <svg
+                                    className="w-8 h-8 text-green-600 animate-checkmark"
+                                    fill="currentColor"
+                                    viewBox="0 0 20 20"
+                                >
+                                    <path
+                                        fillRule="evenodd"
+                                        d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                                        clipRule="evenodd"
+                                    />
                                 </svg>
+                                <style>
+                                    {`
+                                    @keyframes bounceIn {
+                                        0% {
+                                            opacity: 0;
+                                            transform: scale(0.3);
+                                        }
+                                        50% {
+                                            opacity: 1;
+                                            transform: scale(1.05);
+                                        }
+                                        70% {
+                                            transform: scale(0.95);
+                                        }
+                                        100% {
+                                            opacity: 1;
+                                            transform: scale(1);
+                                        }
+                                    }
+                                    .animate-bounce-in {
+                                        animation: bounceIn 0.7s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+                                    }
+                                    @keyframes checkmarkPop {
+                                        0% {
+                                            opacity: 0;
+                                            transform: scale(0.5) rotate(-20deg);
+                                        }
+                                        60% {
+                                            opacity: 1;
+                                            transform: scale(1.2) rotate(8deg);
+                                        }
+                                        80% {
+                                            transform: scale(0.95) rotate(-4deg);
+                                        }
+                                        100% {
+                                            opacity: 1;
+                                            transform: scale(1) rotate(0deg);
+                                        }
+                                    }
+                                    .animate-checkmark {
+                                        animation: checkmarkPop 0.7s 0.2s cubic-bezier(0.68, -0.55, 0.27, 1.55) both;
+                                    }
+                                    `}
+                                </style>
                             </div>
                             <h2 className="text-2xl font-bold text-gray-900 mb-2">Thank you for your order!</h2>
                             <p className="text-gray-600 mb-6">
@@ -438,7 +518,7 @@ function CheckOut() {
                             </p>
                             <Link
                                 to="/"
-                                className="inline-block bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-6 rounded-lg transition-colors"
+                                className="inline-block bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-6 rounded-lg transition-colors"
                             >
                                 Back to Home
                             </Link>

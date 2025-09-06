@@ -389,6 +389,39 @@ const Navbar = () => {
                             <li className="nav-item" style={{ margin: '0 10px' }}>
                                 <a
                                     className="nav-link"
+                                    href="#about"
+                                    style={{
+                                        color: "#fff",
+                                        fontWeight: 500,
+                                        borderRadius: 6,
+                                        padding: "8px 0px",
+                                        textDecoration: "none",
+                                        display: "block",
+                                        transition: "background 0.2s, color 0.2s",
+                                    }}
+                                    onMouseOver={e => {
+                                        e.currentTarget.style.background = "#16a34a";
+                                        e.currentTarget.style.color = "#fef08a";
+                                    }}
+                                    onMouseOut={e => {
+                                        e.currentTarget.style.background = "transparent";
+                                        e.currentTarget.style.color = "#fff";
+                                    }}
+                                    onClick={e => {
+                                        e.preventDefault();
+                                        const section = document.getElementById('about');
+                                        if (section) {
+                                            section.scrollIntoView({ behavior: 'smooth' });
+                                        }
+                                    }}
+                                >
+                                    <i className="fa-solid fa-circle-info"></i> About
+                                </a>
+                            </li>
+
+                            <li className="nav-item" style={{ margin: '0 10px' }}>
+                                <a
+                                    className="nav-link"
                                     href="#contact"
                                     style={{
                                         color: "#fff",
@@ -419,39 +452,6 @@ const Navbar = () => {
                                 </a>
                             </li>
 
-
-                            <li className="nav-item" style={{ margin: '0 10px' }}>
-                                <a
-                                    className="nav-link"
-                                    href="#about"
-                                    style={{
-                                        color: "#fff",
-                                        fontWeight: 500,
-                                        borderRadius: 6,
-                                        padding: "8px 0px",
-                                        textDecoration: "none",
-                                        display: "block",
-                                        transition: "background 0.2s, color 0.2s",
-                                    }}
-                                    onMouseOver={e => {
-                                        e.currentTarget.style.background = "#16a34a";
-                                        e.currentTarget.style.color = "#fef08a";
-                                    }}
-                                    onMouseOut={e => {
-                                        e.currentTarget.style.background = "transparent";
-                                        e.currentTarget.style.color = "#fff";
-                                    }}
-                                    onClick={e => {
-                                        e.preventDefault();
-                                        const section = document.getElementById('about');
-                                        if (section) {
-                                            section.scrollIntoView({ behavior: 'smooth' });
-                                        }
-                                    }}
-                                >
-                                    <i className="fa-solid fa-circle-info"></i> About
-                                </a>
-                            </li>
                             <li>
                                 <button type="button" class="btn btn-outline-light position-relative" data-bs-toggle="modal" data-bs-target="#exampleModal">
                                     <i className="fa-solid fa-cart-shopping"></i> Cart

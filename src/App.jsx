@@ -35,13 +35,14 @@ function App() {
           <Navbar />
           <Routes>
             <Route path="/" element={<Home />} />
+            {/* try to add categories, best selling and new arrivals routes */}
             <Route path="/products" element={<Products />} />
             <Route path="/product/:id" element={<ProductDetails />} />
             <Route path="/about" element={<About />} />
             <Route path="/terms" element={<Terms />} />
             <Route path="/shipping" element={<Shipping />} />
             <Route path="/refund" element={<Refund />} />
-            <Route path="/checkout" element={<CheckOut/>}></Route>
+            <Route path="/checkout" element={<CheckOut />}></Route>
             <Route path="/privacy" element={<Privacy />} />
           </Routes>
           <Footer />
@@ -86,7 +87,7 @@ function ScrollToTopButton() {
         background: '#22c55e',
         border: 'none',
         padding: '10px',
-        borderRadius: '50%',
+        borderRadius: '30%',
         boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)',
         transition: 'all 0.3s ease',
         cursor: 'pointer',
@@ -95,7 +96,7 @@ function ScrollToTopButton() {
       }}
       aria-label="Scroll to top"
     >
-      <i className="fa-solid fa-arrow-up" style={{ fontSize: '20px', color: '#fff' }}></i>
+      <i className="fa-solid fa-arrow-up" style={{ fontSize: '25px', fontWeight: '700', color: '#fff' }}></i>
     </button>
   ) : null;
 }
