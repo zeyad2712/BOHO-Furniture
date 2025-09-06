@@ -1,5 +1,5 @@
 import React, { useRef, useEffect, useState } from 'react';
-import { addContactSubmission, exportSubmissionsAsJSON, getAllContactSubmissions, exportAllToGoogleSheets } from '../utils/contactStorage';
+// import { addContactSubmission, exportSubmissionsAsJSON, getAllContactSubmissions, exportAllToGoogleSheets } from '../utils/contactStorage';
 
 // Animation hook: returns true when the ref is in view (like in NewArrivals.jsx)
 function useInView(ref, options = {}) {
@@ -26,7 +26,7 @@ function useInView(ref, options = {}) {
 function ContactUs() {
     const sectionRef = useRef(null);
     const inView = useInView(sectionRef);
-    const [submissions, setSubmissions] = useState(getAllContactSubmissions());
+    // const [submissions, setSubmissions] = useState(getAllContactSubmissions());
 
     return (
         <>
@@ -150,32 +150,6 @@ function ContactUs() {
                                 flexDirection: 'column',
                                 gap: 18,
                             }}
-                            onSubmit={async (e) => {
-                                e.preventDefault();
-
-                                const formData = {
-                                    name: e.target.name.value,
-                                    phone: e.target.phone.value,
-                                    message: e.target.message.value,
-                                };
-
-                                try {
-                                    // Store the submission locally
-                                    const result = await addContactSubmission(formData);
-
-                                    if (result.success) {
-                                        alert("شكراً! تم إرسال رسالتك ✅");
-                                        e.target.reset();
-                                        // Refresh the submissions data
-                                        setSubmissions(getAllContactSubmissions());
-                                    } else {
-                                        alert("عذراً، حدث خطأ في حفظ البيانات. يرجى المحاولة مرة أخرى.");
-                                    }
-                                } catch (error) {
-                                    console.error('Error submitting form:', error);
-                                    alert("عذراً، حدث خطأ في إرسال النموذج. يرجى المحاولة مرة أخرى.");
-                                }
-                            }}
                         >
                             <div style={{ display: 'flex', gap: 16, flexWrap: 'wrap' }}>
                                 <div style={{ flex: 1, minWidth: 120 }}>
@@ -244,9 +218,9 @@ function ContactUs() {
                                 ></textarea>
                             </div>
 
-                            <button
+                            <input
                                 type="submit"
-                                className="btn bg-green-600 hover:bg-green-700 text-white font-bold"
+                                className="btn bg-green-600 hover:bg-green-700 text-white font-bold flex items-center justify-center gap-2"
                                 style={{
                                     fontWeight: 700,
                                     border: 'none',
@@ -257,10 +231,9 @@ function ContactUs() {
                                     boxShadow: '0 2px 8px rgba(34,197,94,0.10)',
                                     cursor: 'pointer',
                                 }}
-                            >
-                                <i className="fa-solid fa-paper-plane" style={{ marginRight: 8 }}></i>
-                                Send Message
-                            </button>
+                                value="Send Message"
+                            />
+
                         </form>
 
                         {/* Submission Statistics and Export Section */}
@@ -365,9 +338,6 @@ function ContactUs() {
 
                     </div>
                 </div>
-                {/* Hidden iframe for form submission */}
-                <iframe name="hidden_iframe" id="hidden_iframe" style={{ display: 'none' }}></iframe>
-                {/* No <style> block needed, animation is now handled by JS/React */}
                 {/* <ContactForm /> */}
             </section>
         </>
