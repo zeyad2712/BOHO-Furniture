@@ -1,10 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useCart } from '../context/CartContext';
 // import ProductsData from '../data/ProductsData.js';
 
 const Navbar = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const [scrolled, setScrolled] = useState(false);
+    const navRef = useRef(null);
     const { items, removeFromCart, updateQuantity, clearCart, getCartTotal, getCartItemsCount } = useCart();
 
     useEffect(() => {
@@ -15,16 +17,29 @@ const Navbar = () => {
         }
     }, []);
 
+    useEffect(() => {
+        // Listen for scroll to add blur effect
+        const handleScroll = () => {
+            if (window.scrollY > 2) {
+                setScrolled(true);
+            } else {
+                setScrolled(false);
+            }
+        };
+        window.addEventListener("scroll", handleScroll, { passive: true });
+        return () => window.removeEventListener("scroll", handleScroll);
+    }, []);
+
     const toggleMenu = () => {
         setIsMenuOpen(!isMenuOpen);
     };
 
     return (
-
         <>
             {/* The Navbar */}
             <nav
-                className="navbar navbar-expand-lg"
+                ref={navRef}
+                className={`navbar navbar-expand-lg${scrolled ? " navbar-blur" : ""}`}
                 style={{
                     background: "linear-gradient(135deg, #22c55e 0%, #16a34a 100%)",
                     boxShadow: "0 4px 24px rgba(34, 197, 94, 0.15)",
@@ -33,6 +48,7 @@ const Navbar = () => {
                     top: 0,
                     zIndex: 1000,
                     borderBottom: "1px solid rgba(34, 197, 94, 0.08)",
+                    // The blur is handled by the .navbar-blur class below
                 }}
             >
                 <div className="container-fluid" style={{ alignItems: "center" }}>
@@ -476,6 +492,14 @@ const Navbar = () => {
                     transition: background 0.2s, color 0.2s !important;
                 }
                 
+                /* Blur effect for navbar when scrolled */
+                .navbar-blur {
+                    backdrop-filter: blur(12px) !important;
+                    -webkit-backdrop-filter: blur(12px) !important;
+                    /* Keeps the same background color/gradient */
+                    /* Optionally, you can add a slight opacity for extra effect */
+                }
+
                 /* Dropdown styles */
                 .dropdown-menu {
                     display: none;
@@ -686,7 +710,7 @@ const Navbar = () => {
                     background: "rgba(34,197,94,0.08)",
                 }}
             >
-                <div className="modal-dialog modal-dialog-centered" style={{ maxWidth: 680 }}>
+                <div className="modal-dialog modal-dialog-centered" style={{ maxWidth: 850 }}>
                     <div
                         className="modal-content"
                         style={{
@@ -958,7 +982,7 @@ const Navbar = () => {
                                         <i className="fa fa-trash me-2"></i>Clear
                                     </button>
                                     <Link
-                                        // to={/checkout}
+                                        to="/checkout"
                                         type="button"
                                         className="btn"
                                         style={{
@@ -972,9 +996,7 @@ const Navbar = () => {
                                             boxShadow: "0 2px 8px rgba(34,197,94,0.10)",
                                             transition: "all 0.2s, color 0.2s",
                                         }}
-                                        // onClick={() => {
-                                        //     alert("Checkout functionality would be implemented here!");
-                                        // }}
+                                        onClick={() => setCartOpen(false)}
                                         onMouseEnter={(e) => {
                                             e.currentTarget.style.scale = 1.05;
                                         }}

@@ -91,6 +91,79 @@ function Hero() {
                 }}
             />
 
+            {/* New animated background decorations */}
+            <div
+                className="bg-decoration-5"
+                style={{
+                    position: 'absolute',
+                    top: '35%',
+                    left: '50%',
+                    width: '120px',
+                    height: '120px',
+                    background: 'radial-gradient(circle, rgba(34,197,94,0.07) 0%, transparent 70%)',
+                    borderRadius: '50%',
+                    transform: 'translate(-50%, -50%)',
+                    animation: 'floatX 9s ease-in-out infinite',
+                    zIndex: 0,
+                }}
+            />
+            <svg
+                className="bg-decoration-6"
+                width="90"
+                height="90"
+                viewBox="0 0 90 90"
+                fill="none"
+                style={{
+                    position: 'absolute',
+                    top: '60%',
+                    left: '20%',
+                    zIndex: 0,
+                    opacity: 0.12,
+                    pointerEvents: 'none',
+                    animation: 'spinReverse 22s linear infinite',
+                    willChange: 'transform',
+                }}
+                tabIndex={-1}
+                aria-hidden="true"
+            >
+                <ellipse cx="45" cy="45" rx="40" ry="20" stroke="#22c55e" strokeWidth="4" />
+            </svg>
+            <svg
+                className="bg-decoration-7"
+                width="60"
+                height="60"
+                viewBox="0 0 60 60"
+                fill="none"
+                style={{
+                    position: 'absolute',
+                    bottom: '8%',
+                    right: '20%',
+                    zIndex: 0,
+                    opacity: 0.15,
+                    pointerEvents: 'none',
+                    animation: 'floatY 10s ease-in-out infinite reverse',
+                    willChange: 'transform',
+                }}
+                tabIndex={-1}
+                aria-hidden="true"
+            >
+                <polygon points="30,5 55,55 5,55" stroke="#8b4513" strokeWidth="3" fill="none" />
+            </svg>
+            <div
+                className="bg-decoration-8"
+                style={{
+                    position: 'absolute',
+                    top: '70%',
+                    left: '80%',
+                    width: '80px',
+                    height: '80px',
+                    background: 'radial-gradient(circle, rgba(139,69,19,0.07) 0%, transparent 70%)',
+                    borderRadius: '50%',
+                    animation: 'floatXY 12s ease-in-out infinite',
+                    zIndex: 0,
+                }}
+            />
+
             {/* Decorative elements with improved positioning and styling */}
             <svg
                 className="bg-decoration-3"
@@ -490,12 +563,19 @@ function Hero() {
                 left: '50%',
                 transform: 'translateX(-50%)',
                 zIndex: 2,
+                cursor: 'pointer',
                 display: 'flex',
                 justifyContent: 'center',
                 flexDirection: 'column',
                 opacity: 0,
                 animation: 'fadeIn 1s ease-out 2.5s forwards',
-            }}>
+            }}
+                onClick={() => {
+                    const newArrivalsSection = document.getElementById('new-arrivals');
+                    if (newArrivalsSection) {
+                        newArrivalsSection.scrollIntoView({ behavior: 'smooth' });
+                    }
+                }}>
                 <div style={{
                     width: '30px',
                     height: '50px',
@@ -546,6 +626,28 @@ function Hero() {
         @keyframes float {
             0%, 100% { transform: translateY(0px); }
             50% { transform: translateY(-20px); }
+        }
+        @keyframes floatX {
+            0%, 100% { transform: translate(-50%, -50%) translateX(0); }
+            50% { transform: translate(-50%, -50%) translateX(30px); }
+        }
+        @keyframes floatY {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-18px); }
+        }
+        @keyframes floatXY {
+            0%, 100% { transform: translateY(0) translateX(0); }
+            25% { transform: translateY(-10px) translateX(10px);}
+            50% { transform: translateY(10px) translateX(-10px);}
+            75% { transform: translateY(-10px) translateX(-10px);}
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg);}
+            100% { transform: rotate(360deg);}
+        }
+        @keyframes spinReverse {
+            0% { transform: rotate(0deg);}
+            100% { transform: rotate(-360deg);}
         }
         @keyframes gradientShift {
             0% { background-position: 0% 50%; }
@@ -616,7 +718,8 @@ function Hero() {
             .bg-decoration-4,
             .bg-decoration-5,
             .bg-decoration-6,
-            .bg-decoration-7 {
+            .bg-decoration-7,
+            .bg-decoration-8 {
             display: none !important;
             }
         }
